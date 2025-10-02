@@ -1,0 +1,8 @@
+default:
+  requireModule:
+    - ts-node/register
+  format:
+    - '@serenity-js/cucumber'
+  require:
+    - ./features/steps/**/*.steps.ts
+    - ./features/support/**/*.config.ts

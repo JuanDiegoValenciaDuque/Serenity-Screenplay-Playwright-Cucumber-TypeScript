@@ -1,0 +1,35 @@
+{
+  "name": "auto-primo",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "clean": "npx rimraf target",
+    "test": "cucumber-js --require-module ts-node/register --require features/**/*.ts",
+    "report": "serenity-bdd run --features ./feature",
+    "all": "npm run clean && npm run test && npm run report",
+    "test:webkit": "npm run clean && cross-env BROWSER=webkit npm test && npm run report",
+    "test:chromium": "npm run clean && cross-env BROWSER=chromium npm test && npm run report",
+    "test:firefox": "npm run clean && cross-env BROWSER=firefox npm test && npm run report",
+    "test:all": "npm run clean && cross-env BROWSER=webkit npm test && npm run report && npm run clean && cross-env BROWSER=chromium npm test && npm run report && npm run clean && cross-env BROWSER=firefox npm test && npm run report",
+    "test:parallel": "npm run clean && npm-run-all --parallel test:webkit:no-clean test:chromium:no-clean test:firefox:no-clean && npm run report",
+    "test:webkit:no-clean": "cross-env BROWSER=webkit npm test",
+    "test:chromium:no-clean": "cross-env BROWSER=chromium npm test",
+    "test:firefox:no-clean": "cross-env BROWSER=firefox npm test"
+  },
+  "devDependencies": {
+    "@serenity-js/assertions": "^3.0.0",
+    "@serenity-js/console-reporter": "^3.0.0",
+    "@serenity-js/core": "^3.0.0",
+    "@serenity-js/cucumber": "^3.0.0",
+    "@serenity-js/playwright": "^3.0.0",
+    "@serenity-js/serenity-bdd": "^3.35.1",
+    "@serenity-js/web": "^3.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "cross-env": "^10.1.0",
+    "fs-extra": "^11.3.2",
+    "npm-run-all": "^4.1.5",
+    "playwright": "^1.42.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
