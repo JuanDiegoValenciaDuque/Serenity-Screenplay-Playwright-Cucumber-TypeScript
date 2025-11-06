@@ -9,7 +9,7 @@ export class TextExist extends Question<Promise<string>> {
     }
 
     constructor(private readonly locator: By) {
-        super(`#actor get the tittle page of google`);
+        super(`#actor get the tittle page of Primo`);
     }
 
      async answeredBy(actor: AnswersQuestions & UsesAbilities): Promise<string> {

@@ -1,6 +1,8 @@
-import { BeforeAll } from '@cucumber/cucumber';
-import { configure } from '@serenity-js/core';
+import { BeforeAll, setDefaultTimeout  } from '@cucumber/cucumber';
+import { configure, Duration } from '@serenity-js/core';
 import path from 'path';
+
+setDefaultTimeout(Duration.ofSeconds(30).inMilliseconds());
 
 BeforeAll(() => {
   configure({

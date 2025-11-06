@@ -1,0 +1,42 @@
+{
+    "credentials": {
+        "user": "cort-it@heyprimo.com",
+        "password": "Test1234#"
+    },
+    "origin": {
+        "postalCode": "02108",
+        "country": "US"
+    },
+    "destination": {
+        "postalCode": "02467",
+        "country": "US"
+    },
+    "items": [
+        {
+            "itemName": "Warehouse",
+            "quantity": 1,
+            "length": 40,
+            "width": 48,
+            "height": 93,
+            "weight": 433,
+            "NMFC": "",
+            "isStackable": false,
+            "levels": 1,
+            "isHazardous": false,
+            "UNOrTechnicalName": ""            
+        },
+        {
+            "itemName": "Test",
+            "quantity": 1,
+            "length": 40,
+            "width": 48,
+            "height": 93,
+            "weight": 433,
+            "NMFC": "",
+            "isStackable": false,
+            "levels": 1,
+            "isHazardous": false,
+            "UNOrTechnicalName": ""            
+        }
+    ]
+}

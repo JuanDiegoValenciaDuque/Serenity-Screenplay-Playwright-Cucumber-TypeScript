@@ -6,3 +6,4 @@ default:
   require:
     - ./features/steps/**/*.steps.ts
     - ./features/support/**/*.config.ts
+  retry: 3
