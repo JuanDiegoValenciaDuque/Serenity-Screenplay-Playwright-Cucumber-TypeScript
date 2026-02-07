@@ -11,9 +11,7 @@ export class HomePage {
       static get QuotingOption() {
         return PageElement.located(By.xpath("(//span[(text())='Quoting'])[1]"))
             .describedAs("QuotingOption");
-    }
-
-    
+    }    
 
       static get QuotingLTL() {
         return PageElement.located(By.xpath("//span[normalize-space(text())='LTL/FTL']"))

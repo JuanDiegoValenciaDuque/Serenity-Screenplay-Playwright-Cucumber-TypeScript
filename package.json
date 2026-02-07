@@ -2,15 +2,7 @@
   "name": "auto-primo",
   "version": "1.0.0",
   "type": "commonjs",
-  "scripts": {
-    "clean": "npx rimraf target",
-    "test": "cucumber-js features/quoting.feature --require-module ts-node/register --require features/steps/**/*.ts",
-    "report": "serenity-bdd run --features ./feature",
-    "all": "npm run clean && npm run test && npm run report",
-    "test:chromium": "npm run clean && cross-env BROWSER=chromium npm test && npm run report",
-    "test:firefox": "npm run clean && cross-env BROWSER=firefox npm test && npm run report",
-    "test:all": "npm run clean && cross-env BROWSER=chromium npm test && npm run report && npm run clean && cross-env BROWSER=firefox npm test && npm run report"
-  },
+
   "devDependencies": {
     "@serenity-js/assertions": "^3.0.0",
     "@serenity-js/console-reporter": "^3.0.0",

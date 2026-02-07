@@ -22,4 +22,35 @@ export class QuotingPage {
         return PageElement.located(By.id('destination-listbox'))
             .describedAs('Destination dropdown list');
     }
+
+    static get ItemNameInput() {
+        return PageElement.located(By.xpath("//input[@id='itemName']"))
+            .describedAs('Item name input');
+    }
+
+    static get WidthInput() {
+        return PageElement.located(By.xpath("//input[@name='width']"))
+            .describedAs('Item width input');
+    }
+
+    static get HeightInput() {
+        return PageElement.located(By.xpath("//input[@name='height']"))
+            .describedAs('Item height input');
+    }
+
+    static get LengthInput() {
+        return PageElement.located(By.xpath("//div[@label='Length']//input"))
+            .describedAs('Item length input');
+    }
+
+    static get WeightInput() {
+        return PageElement.located(By.xpath("//input[@name='weight']"))
+            .describedAs('Item weight input');
+    }
+
+    static get GetBestRatesButton() {
+        return PageElement.located(
+            By.xpath("//button[normalize-space(.)='GET THE BEST RATES']")
+        ).describedAs('Get the best rates button');
+    }
 }
