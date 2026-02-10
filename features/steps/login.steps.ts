@@ -16,9 +16,3 @@ Then('I should see the tittle {string}', async (expectedTittle: string) => {
 When('the user logs in with credentials', async () => {
   await actorInTheSpotlight().attemptsTo(Log.in());
 })
-
-
-
-
-
-

@@ -1,6 +1,4 @@
 import * as crypto from 'crypto';
-import * as fs from 'fs';
-import * as path from 'path';
 
 const ALGORITHM = 'aes-256-gcm';
 const KEY_LENGTH = 32;
@@ -24,17 +22,9 @@ export class Encryptor {
       authTag,
     };
 
-    fs.writeFileSync(
-      path.join(__dirname, 'secret.enc'),
-      JSON.stringify(payload, null, 2)
-    );
-
-    fs.writeFileSync(
-      path.join(__dirname, 'secret.key'),
-      key.toString('hex')
-    );
-
     console.log('Password encrypted');
+    console.log('Payload:');
+    console.log(JSON.stringify(payload, null, 2));
     console.log('Key:', key.toString('hex'));
   }
 }

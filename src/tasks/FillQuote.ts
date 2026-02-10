@@ -30,10 +30,8 @@ export class FillQuote extends Task {
             Enter.theValue(data.items[0].length).into(QuotingPage.LengthInput),
             Enter.theValue(data.items[0].width).into(QuotingPage.WidthInput),
             Enter.theValue(data.items[0].height).into(QuotingPage.HeightInput),
-            Enter.theValue(data.items[0].weight).into(QuotingPage.WeightInput),
-            Press.the('Tab'),
-            Press.the('Tab'),
-            Click.on(QuotingPage.GetBestRatesButton)
+            Enter.theValue(data.items[0].weight).into(QuotingPage.WeightInput)
+            //Click.on(QuotingPage.GetBestRatesButton)
         );
     }
 }
