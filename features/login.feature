@@ -1,3 +1,4 @@
+@login
 Feature: Login to the Portal
 
   Scenario: open portal.heyprimo

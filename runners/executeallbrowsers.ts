@@ -1,5 +1,8 @@
 import { spawn } from 'child_process';
 import * as path from 'path';
+import { clean } from './utils';
+
+clean();
 
 const node = process.execPath;
 
@@ -11,7 +14,6 @@ const browsers = ['chromium', 'firefox', 'webkit'];
 
 const processes = browsers.map(browser => {
   console.log(`Launching smoke tests on ${browser}`);
-
   return spawn(
     node,
     [tsNodeScript, 'runners/allbrowsers.ts'],
@@ -20,10 +22,13 @@ const processes = browsers.map(browser => {
       env: {
         ...process.env,
         BROWSER: browser,
+                SERENITY_OUTPUT_DIRECTORY: `target/site/serenity/${browser}`,
       },
     }
   );
 });
+
+
 
 Promise.all(
   processes.map(
@@ -44,3 +49,5 @@ Promise.all(
     console.error(err.message);
     process.exit(1);
   });
+
+

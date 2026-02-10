@@ -15,7 +15,7 @@ export class QuotingPage {
 
     static get OriginListbox() {
         return PageElement.located(By.id('origin-listbox'))
-            .describedAs('Destination dropdown list');
+            .describedAs('Origin dropdown list');
     }
 
     static get DestinationListbox() {

@@ -2,7 +2,10 @@
   "name": "auto-primo",
   "version": "1.0.0",
   "type": "commonjs",
-
+  "scripts": {
+    "test": "npx ts-node runners/executeallbrowsers.ts",
+    "test:smoke": "npx ts-node runners/smoke.ts"
+  },
   "devDependencies": {
     "@serenity-js/assertions": "^3.0.0",
     "@serenity-js/console-reporter": "^3.0.0",

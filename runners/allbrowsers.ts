@@ -1,6 +1,5 @@
 import { clean, runTestsByTag, generateReport } from './utils';
 
-console.log('Running tests on:', process.env.BROWSER);
-clean();
-runTestsByTag('@smoke and @quoting');
+const browser: string = process.env.BROWSER ?? 'chromium';
+runTestsByTag('@smoke and @quoting', browser);
 generateReport();

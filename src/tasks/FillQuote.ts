@@ -1,5 +1,5 @@
 import { Task, the, PerformsActivities, UsesAbilities } from '@serenity-js/core';
-import { Enter, Click, Press } from '@serenity-js/web';
+import { Enter } from '@serenity-js/web';
 import { QuotingPage } from '../userinterfaces/QuotingPage';
 import { FillZipAuto } from '../interactions/FillZipAuto';
 import data from '../utils/quote.json';
@@ -31,7 +31,6 @@ export class FillQuote extends Task {
             Enter.theValue(data.items[0].width).into(QuotingPage.WidthInput),
             Enter.theValue(data.items[0].height).into(QuotingPage.HeightInput),
             Enter.theValue(data.items[0].weight).into(QuotingPage.WeightInput)
-            //Click.on(QuotingPage.GetBestRatesButton)
         );
     }
 }

@@ -15,6 +15,6 @@ export class LoginPage {
 
     static get PasswordField() {
         return PageElement.located(By.xpath("//input[@id='Input_Password']"))
-            .describedAs("Email Field");
+            .describedAs("Password Field");
     }
 }
