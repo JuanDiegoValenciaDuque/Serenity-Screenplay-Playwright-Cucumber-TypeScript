@@ -9,15 +9,15 @@ const browserType = process.env.BROWSER;
 BeforeAll(async () => {
   switch (browserType) {
     case 'chromium':
-      browser = await chromium.launch({ headless: false });
+      browser = await chromium.launch({ headless: true });
       break;
 
     case 'firefox':
-      browser = await firefox.launch({ headless: false });
+      browser = await firefox.launch({ headless: true });
       break;
 
     case 'webkit':
-      browser = await webkit.launch({ headless: false });
+      browser = await webkit.launch({ headless: true });
       break;
 
     default:
@@ -30,7 +30,5 @@ AfterAll(async () => {
 });
 
 Before(() => {
-  actorCalled('User').whoCan(
-    BrowseTheWebWithPlaywright.using(browser)
-  );
+  actorCalled('User').whoCan(BrowseTheWebWithPlaywright.using(browser));
 });

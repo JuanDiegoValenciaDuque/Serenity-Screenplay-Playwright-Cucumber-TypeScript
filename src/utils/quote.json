@@ -1,25 +1,25 @@
 {
-    "origin": {
-        "postalCode": "02108",
-        "country": "US"
-    },
-    "destination": {
-        "postalCode": "02467",
-        "country": "US"
-    },
-    "items": [
-        {
-            "itemName": "Testing",
-            "quantity": 1,
-            "length": 40,
-            "width": 48,
-            "height": 93,
-            "weight": 433,
-            "NMFC": "",
-            "isStackable": false,
-            "levels": 1,
-            "isHazardous": false,
-            "UNOrTechnicalName": ""            
-        }
-    ]
+  "origin": {
+    "postalCode": "70001",
+    "country": "US"
+  },
+  "destination": {
+    "postalCode": "60608",
+    "country": "US"
+  },
+  "items": [
+    {
+      "itemName": "Testing",
+      "quantity": 1,
+      "length": 40,
+      "width": 48,
+      "height": 93,
+      "weight": 433,
+      "NMFC": "",
+      "isStackable": false,
+      "levels": 1,
+      "isHazardous": false,
+      "UNOrTechnicalName": ""
+    }
+  ]
 }

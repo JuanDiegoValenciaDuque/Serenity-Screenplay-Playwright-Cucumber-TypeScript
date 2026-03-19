@@ -1,12 +1,17 @@
 @smoke @quoting
-Feature: As a user, I want to create an LTL quote so that I can obtain pricing and shipping details for LTL shipments.
+Feature: LTL quote created in Portal is successfully registered in Shipwell
+  As a user,
+  I want an LTL quote created in Portal to be registered in Shipwell
+  So that the shipment information is synchronized between systems
 
   Background:
     Given the user opens the Portal site
     When the user logs in with credentials
 
-  Scenario: Create LTL quote
-    Given the user wants to create a new LTL quote
-    When the user fills in all the required information
-    And the system retrieves the best available rates
+  Scenario: LTL quote is created in Shipwell
+    When the user wants to create a new LTL quote
+    And the user gets the best available rates
     Then the user can see all the rates displayed successfully
+    When the user logs into Shipwell
+    And the user searches the quote by reference
+    Then the quote should exist in Shipwell

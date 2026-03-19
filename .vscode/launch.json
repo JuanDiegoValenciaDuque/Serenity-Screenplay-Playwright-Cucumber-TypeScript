@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Serenity (Prompt Args)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "test",
+        "--"
+      ],
+      "args": [
+        "${input:testArgs}"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testArgs",
+      "type": "promptString",
+      "description": "Enter test args (e.g. tag=@quoting browsers=webkit)"
+    }
+  ]
+}

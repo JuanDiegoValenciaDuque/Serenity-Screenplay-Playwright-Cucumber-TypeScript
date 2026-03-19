@@ -1,13 +1,28 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "target": "ES2022",
+    "target": "es2019",
+    "lib": ["es2019", "dom"],
     "module": "commonjs",
-    "rootDir": ".",
-    "types": ["node"],
-    "resolveJsonModule": true
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "declaration": true,
+    "types": [
+      "node"
+    ]
   },
-  "include": ["src/**/*.ts", "features/**/*.ts"]
+
+  "include": [
+    "utils",
+    "**/*.ts",
+    "features/**/*.ts",
+    "test/**/*.ts"
+  ],
+
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,0 +1,22 @@
+# Dependencies & build output
+node_modules/
+target/
+dist
+build
+
+# Lock files
+*.lock
+package-lock.json
+
+# Config files (managed manually, not formatted)
+package.json
+tsconfig.json
+tsconfig.eslint.json
+eslint.config.mjs
+
+# Environment & local files
+.env
+.env.example
+.context
+.bash_history
+.vscode/

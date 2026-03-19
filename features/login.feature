@@ -1,5 +1,5 @@
 @login
-Feature: Login to the Portal
+Feature: Login to the Portal and see terms
 
   Scenario: open portal.heyprimo
     Given the user opens the Portal site

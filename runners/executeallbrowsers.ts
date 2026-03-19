@@ -1,53 +1,42 @@
-import { spawn } from 'child_process';
-import * as path from 'path';
-import { clean } from './utils';
+import { clean, runTestsByTag, generateConsolidatedReport } from './utils';
 
+function getTagFromArgs(): string | undefined {
+  const tagsArgument = process.argv.find(argument => argument.startsWith('tag='));
+  if (!tagsArgument) {
+    console.log('No tags provided. Running all scenarios.');
+    return undefined;
+  }
+  return tagsArgument.split('=')[1];
+}
+
+function getBrowsersFromArgs(): string[] {
+  const browsersArgument = process.argv.find(argument => argument.startsWith('browsers='));
+  if (!browsersArgument) {
+    console.log('No browsers provided. Running all browsers.');
+    return ['chromium', 'webkit'];
+  }
+  return browsersArgument
+    .split('=')[1]
+    .split(',')
+    .map(b => b.trim());
+}
+
+const tag = getTagFromArgs();
+const browsers = getBrowsersFromArgs();
+
+console.log('Cleaning previous results...');
 clean();
 
-const node = process.execPath;
+for (const browser of browsers) {
+  console.log(`Running tests on ${browser}...`);
+  try {
+    runTestsByTag(tag, browser);
+  } catch (error) {
+    console.error(`${browser} failed`);
+  }
+}
 
-const tsNodeScript = path.resolve(
-  'node_modules/ts-node/dist/bin.js'
-);
+console.log('Generating Serenity consolidated report...');
+generateConsolidatedReport(browsers);
 
-const browsers = ['chromium', 'firefox', 'webkit'];
-
-const processes = browsers.map(browser => {
-  console.log(`Launching smoke tests on ${browser}`);
-  return spawn(
-    node,
-    [tsNodeScript, 'runners/allbrowsers.ts'],
-    {
-      stdio: 'inherit',
-      env: {
-        ...process.env,
-        BROWSER: browser,
-                SERENITY_OUTPUT_DIRECTORY: `target/site/serenity/${browser}`,
-      },
-    }
-  );
-});
-
-
-
-Promise.all(
-  processes.map(
-    p =>
-      new Promise<void>((resolve, reject) => {
-        p.on('exit', code =>
-          code === 0
-            ? resolve()
-            : reject(new Error(`${browsers} failed`))
-        );
-      })
-  )
-)
-  .then(() => {
-    console.log('All browsers finished successfully');
-  })
-  .catch(err => {
-    console.error(err.message);
-    process.exit(1);
-  });
-
-
+console.log('All browsers executed successfully.');
