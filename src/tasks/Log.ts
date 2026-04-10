@@ -21,8 +21,7 @@ export class Log extends Task {
             Enter.theValue(this.username).into(LoginPage.EmailField),
             Click.on(LoginPage.LoginButton),
             Enter.theValue(this.password).into(LoginPage.PasswordField),
-            Click.on(LoginPage.LoginButton),
-            Wait.until(HomePage.Terms, isVisible())
+            Click.on(LoginPage.LoginButton)
         );
     }
 }

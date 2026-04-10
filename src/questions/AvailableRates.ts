@@ -14,6 +14,7 @@ export class AvailableRates extends Question<Promise<string[]>> {
   async answeredBy(actor: Actor): Promise<string[]> {
     const rates = await Text.ofAll(QuotingPage.PriceRates).answeredBy(actor);
     notes().set('RETRIEVED_RATES', rates);
+    console.log(rates);
     return rates;
   }
 }

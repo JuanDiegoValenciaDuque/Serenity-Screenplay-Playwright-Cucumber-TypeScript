@@ -1,0 +1,89 @@
+export interface TestData {
+  CaseID: string;
+  Mode: string;
+  OriginZip: string;
+  DestinationZip: string;
+  OriginCompany: string;
+  DestinationCompany: string;
+  OriginAddress1: string;
+  OriginAddress2: string;
+  DeliveryAddress1: string;
+  DeliveryAddress2: string;
+  PickupRef: string;
+  PickupContact: string;
+  PickupPhone: string;
+  PickupEmail: string;
+  DeliveryRef: string;
+  DeliveryContact: string;
+  DeliveryPhone: string;
+  DeliveryEmail: string;
+  ThirdPartyReference: string;
+  AdditionalReference: string;
+  ReferenceNumber: string;
+  SelectedRate: string;
+
+  C1_Qty: number;
+  C1_Name: string;
+  C1_Package: string;
+  C1_Length: number;
+  C1_Width: number;
+  C1_Height: number;
+  C1_Weight: number;
+  C1_Volume: number;
+  C1_Hazmat: string;
+  C1_NMFC: string;
+  C1_Stackable: string;
+
+  C2_Qty: number;
+  C2_Name: string;
+  C2_Package: string;
+  C2_Length: number;
+  C2_Width: number;
+  C2_Height: number;
+  C2_Weight: number;
+  C2_Volume: number;
+  C2_Hazmat: string;
+  C2_NMFC: string;
+  C2_Stackable: string;
+
+  C3_Qty: number;
+  C3_Name: string;
+  C3_Package: string;
+  C3_Length: number;
+  C3_Width: number;
+  C3_Height: number;
+  C3_Weight: number;
+  C3_Volume: number;
+  C3_Hazmat: string;
+  C3_NMFC: string;
+  C3_Stackable: string;
+
+  C4_Qty: number;
+  C4_Name: string;
+  C4_Package: string;
+  C4_Length: number;
+  C4_Width: number;
+  C4_Height: number;
+  C4_Weight: number;
+  C4_Volume: number;
+  C4_Hazmat: string;
+  C4_NMFC: string;
+  C4_Stackable: string;
+
+  C5_Qty: number;
+  C5_Name: string;
+  C5_Package: string;
+  C5_Length: number;
+  C5_Width: number;
+  C5_Height: number;
+  C5_Weight: number;
+  C5_Volume: number;
+  C5_Hazmat: string;
+  C5_NMFC: string;
+  C5_Stackable: string;
+
+  Accessorial1: string;
+  Accessorial2: string;
+  Accessorial3: string;
+  Accessorial4: string;
+}

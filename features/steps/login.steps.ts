@@ -7,7 +7,7 @@ import { Log } from '../../src/tasks/Log';
 import { TermsExist } from '../../src/questions/TermsExist';
 
 Given('the user opens the Portal site', async () => {
-  await actorInTheSpotlight().attemptsTo(OpenSite.at('https://portal.heyprimo.com/'));
+  await actorInTheSpotlight().attemptsTo(OpenSite.at('https://portal.primofabric.com/'));
 });
 
 Then('I should see the tittle {string}', async (expectedTittle: string) => {
@@ -15,7 +15,7 @@ Then('I should see the tittle {string}', async (expectedTittle: string) => {
 });
 
 When('the user logs in with credentials', async () => {
-  //await actorInTheSpotlight().attemptsTo(Log.in());
+//  await actorInTheSpotlight().attemptsTo(Log.in());
 });
 
 When('the user logs in with {string} and {string}', async (email: string, password: string) => {
