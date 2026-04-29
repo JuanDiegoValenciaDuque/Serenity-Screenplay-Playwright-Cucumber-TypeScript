@@ -313,11 +313,14 @@ default:
 ### `.env`
 
 ```
-USER_EMAIL="primo-it@heyprimo.com"
-USER_PASSWORD="Test1234#"
-BASE_URL="https://portal.primofabric.com"
-API_BASE_URL="https://jsonplaceholder.typicode.com"
+USER_EMAIL="your-email@example.com"
+USER_PASSWORD="your-password"
+BASE_URL="https://your-portal-url.com"
+API_BASE_URL="https://your-api-url.com"
+HEADLESS=false
 ```
+
+`HEADLESS=false` keeps the browser visible locally. In CI, omit it — the runner defaults to headless.
 
 ### `serenity.config.ts` — timeouts
 
@@ -339,6 +342,9 @@ npm run test:webkit
 
 # With tag filter and specific browsers
 npx ts-node runners/executeallbrowsers.ts tag=@smoke browsers=chromium
+
+# Multiple tags (converted to Cucumber 'or' expression)
+npx ts-node runners/executeallbrowsers.ts tag=@api,@shipwell browsers=chromium
 
 # Generate HTML report
 npm run test:report
