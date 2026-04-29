@@ -11,9 +11,10 @@ export class Actors implements Cast {
   ) {}
 
   prepare(actor: Actor): Actor {
+    const apiBaseUrl = process.env.API_BASE_URL ?? this.browserContextOptions.baseURL!;
     return actor.whoCan(
       BrowseTheWebWithPlaywright.using(this.browser, this.browserContextOptions, this.extraBrowserContextOptions),
-      CallAnApi.at(this.browserContextOptions.baseURL),
+      CallAnApi.at(apiBaseUrl),
       TakeNotes.usingAnEmptyNotepad(),
     );
   }

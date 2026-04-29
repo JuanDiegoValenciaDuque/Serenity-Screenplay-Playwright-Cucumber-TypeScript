@@ -1,16 +1,16 @@
-import { Task, the, PerformsActivities, UsesAbilities, AnswersQuestions, Wait, Duration, Check, notes } from '@serenity-js/core';
+import { Task, the, PerformsActivities, UsesAbilities, AnswersQuestions, Wait, Duration, Check, Answerable } from '@serenity-js/core';
 import { Hover, Click, isVisible } from '@serenity-js/web';
-import { QuotingPage } from '../userinterfaces/QuotingPage';
-import { BookingPage } from '../userinterfaces/BookingPage';
+import { QuotingPage } from '../../userinterfaces/QuotingPage';
+import { BookingPage } from '../../userinterfaces/BookingPage';
 import { isTrue } from '@serenity-js/assertions';
 
 export class SelectRandomRate extends Task {
 
-  static andBook() {
-    return new SelectRandomRate();
+  static andBook(isBookable: Answerable<boolean>) {
+    return new SelectRandomRate(isBookable);
   }
 
-  constructor() {
+  constructor(private readonly isBookable: Answerable<boolean>) {
     super(the`#actor selects a random rate and books it`);
   }
 
@@ -21,14 +21,14 @@ export class SelectRandomRate extends Task {
     const randomRate = QuotingPage.rates.nth(randomIndex);
 
     await actor.attemptsTo(
-
       Hover.over(randomRate),
-      Click.on((QuotingPage.infoButton)),
-      Check.whether(notes().get('bookeable').answeredBy(actor), isTrue())
-    .andIfSo(
-        Click.on(QuotingPage.bookButton),
-        Wait.upTo(Duration.ofSeconds(30))
+      Click.on(QuotingPage.infoButton),
+      Check.whether(this.isBookable, isTrue())
+        .andIfSo(
+          Click.on(QuotingPage.bookButton),
+          Wait.upTo(Duration.ofSeconds(30))
             .until(BookingPage.pickupAddressTitle, isVisible())
-    ))
+        )
+    );
   }
 }

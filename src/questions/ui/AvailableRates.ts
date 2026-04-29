@@ -1,6 +1,6 @@
 import { Actor, notes, Question } from '@serenity-js/core';
 import { Text } from '@serenity-js/web';
-import { QuotingPage } from '../userinterfaces/QuotingPage';
+import { QuotingPage } from '../../userinterfaces/QuotingPage';
 
 export class AvailableRates extends Question<Promise<string[]>> {
   static shown() {

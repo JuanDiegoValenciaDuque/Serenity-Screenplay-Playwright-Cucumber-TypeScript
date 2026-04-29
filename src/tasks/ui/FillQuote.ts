@@ -1,8 +1,8 @@
 import { Task, the, PerformsActivities, UsesAbilities, Wait, Duration } from '@serenity-js/core';
 import { Enter, Click, isVisible } from '@serenity-js/web';
-import { QuotingPage } from '../userinterfaces/QuotingPage';
-import { FillZipAuto } from '../interactions/FillZipAuto';
-import data from '../utils/quote.json';
+import { QuotingPage } from '../../userinterfaces/QuotingPage';
+import { FillZipAuto } from '../../interactions/FillZipAuto';
+import data from '../../utils/quote.json';
 
 export class FillQuote extends Task {
     static LTL() {

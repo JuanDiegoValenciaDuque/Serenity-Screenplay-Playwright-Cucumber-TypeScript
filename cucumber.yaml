@@ -4,6 +4,6 @@ default:
   format:
     - '@serenity-js/cucumber'
   require:
-    - ./features/steps/**/*.steps.ts
-    - ./features/support/**/*.config.ts
+    - ./features/**/*.steps.ts
+    - ./support/**/*.config.ts
 #  retry: 3

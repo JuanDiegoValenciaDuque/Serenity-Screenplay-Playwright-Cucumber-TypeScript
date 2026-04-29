@@ -7,19 +7,54 @@ export function clean() {
   execSync('npx rimraf target', { stdio: 'inherit' });
 }
 
+export function runApiTests(tag?: string) {
+  const isWindows = process.platform === 'win32';
+  const cucumberPath = path.resolve('node_modules', '.bin', isWindows ? 'cucumber-js.cmd' : 'cucumber-js');
+
+  const args: string[] = [
+    'features/api/**/*.feature',
+    '--require-module', 'ts-node/register',
+    '--require', 'features/api/**/*.steps.ts',
+    '--require', 'support/**/*.ts',
+    '--format', '@serenity-js/cucumber',
+  ];
+
+  if (tag) args.push('--tags', tag);
+
+  const spawnArgs = isWindows ? ['/c', cucumberPath, ...args] : args;
+  const spawnCmd  = isWindows ? 'cmd.exe' : cucumberPath;
+
+  const result = spawnSync(spawnCmd, spawnArgs, {
+    stdio: 'inherit',
+    shell: false,
+    env: {
+      ...process.env,
+      RUN_MODE: 'api',
+      SERENITY_OUTPUT_DIRECTORY: 'target/site/serenity/api',
+    },
+  });
+
+  if (result.status !== 0) {
+    throw new Error('API test execution failed');
+  }
+}
+
 export function runTestsByTag(tag: string | undefined, browser: string) {
+  const isWindows = process.platform === 'win32';
   const cucumberPath = path.resolve(
     'node_modules',
     '.bin',
-    process.platform === 'win32' ? 'cucumber-js.cmd' : 'cucumber-js',
+    isWindows ? 'cucumber-js.cmd' : 'cucumber-js',
   );
 
   const args: string[] = [
-    'features/**/*.feature',
+    'features/ui/**/*.feature',
     '--require-module',
     'ts-node/register',
     '--require',
-    'features/**/*.ts',
+    'features/ui/**/*.steps.ts',
+    '--require',
+    'support/**/*.ts',
     '--format',
     '@serenity-js/cucumber',
   ];
@@ -28,9 +63,12 @@ export function runTestsByTag(tag: string | undefined, browser: string) {
     args.push('--tags', tag);
   }
 
-  const result = spawnSync(cucumberPath, args, {
+  const spawnArgs = isWindows ? ['/c', cucumberPath, ...args] : args;
+  const spawnCmd  = isWindows ? 'cmd.exe' : cucumberPath;
+
+  const result = spawnSync(spawnCmd, spawnArgs, {
     stdio: 'inherit',
-    shell: process.platform === 'win32',
+    shell: false,
     env: {
       ...process.env,
       BROWSER: browser,

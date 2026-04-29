@@ -1,7 +1,7 @@
 import { Task, the, PerformsActivities, UsesAbilities } from '@serenity-js/core';
 import { Enter, Click, Press } from '@serenity-js/web';
-import { BookingPage } from '../userinterfaces/BookingPage';
-import { TestData } from '../models/TestData';
+import { BookingPage } from '../../userinterfaces/BookingPage';
+import { TestData } from '../../models/TestData';
 
 export class FillBookingDeliveryDetails extends Task {
 

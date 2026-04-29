@@ -1,7 +1,7 @@
 import { Task, the, PerformsActivities, UsesAbilities, Wait, Duration } from '@serenity-js/core';
-import { TestData } from '../models/TestData';
+import { TestData } from '../../models/TestData';
 import { Click, Enter, isEnabled, isVisible } from '@serenity-js/web';
-import { BookingPage } from '../userinterfaces/BookingPage';
+import { BookingPage } from '../../userinterfaces/BookingPage';
 
 export class GLCodeThirdParty extends Task {
 

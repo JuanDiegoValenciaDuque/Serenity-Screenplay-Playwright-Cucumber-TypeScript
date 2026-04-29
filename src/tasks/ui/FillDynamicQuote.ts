@@ -1,15 +1,15 @@
-import { Task, the, PerformsActivities, UsesAbilities, Wait, Duration, notes } from '@serenity-js/core';
+import { Task, the, PerformsActivities, UsesAbilities, Wait, Duration } from '@serenity-js/core';
 import { Enter, Click, isVisible, Press } from '@serenity-js/web';
-import { QuotingPage } from '../userinterfaces/QuotingPage';
-import { FillZipAuto } from '../interactions/FillZipAuto';
-import { TestData } from '../models/TestData';
+import { QuotingPage } from '../../userinterfaces/QuotingPage';
+import { FillZipAuto } from '../../interactions/FillZipAuto';
+import { TestData } from '../../models/TestData';
 import { equals } from '@serenity-js/assertions';
-import { getCommodities } from '../utils/commodityHelper';
+import { getCommodities } from '../../utils/commodityHelper';
 
-export class FillDinamicQuote extends Task {
+export class FillDynamicQuote extends Task {
 
     static ltl(data: TestData) {
-        return new FillDinamicQuote(data);
+        return new FillDynamicQuote(data);
     }
 
     constructor(private data: TestData) {
@@ -20,55 +20,44 @@ export class FillDinamicQuote extends Task {
         const commodities = getCommodities(this.data);
         const d = this.data;
 
-        // 🔹 llenar datos base (UNA SOLA VEZ)
         await actor.attemptsTo(
-             notes().set('bookeable', true),
             FillZipAuto.with(QuotingPage.OriginZIP, QuotingPage.OriginListbox, d.OriginZip),
             FillZipAuto.with(QuotingPage.DestinationZIP, QuotingPage.DestinationListbox, d.DestinationZip),
         );
 
-        // 🔥 LOOP ÚNICO → crear + llenar
         for (let i = 0; i < commodities.length; i++) {
 
             const c = commodities[i];
 
-            // 👉 SOLO crea nuevo item si NO es el primero
             if (i > 0) {
 
                 const expectedCount = i + 1;
 
-                await actor.attemptsTo(
-                    Click.on(QuotingPage.AddItemButton)
-                );
-
-                try {
+                if (i === 1) {
+                    // UI behavior: first AddItem always requires two clicks to register
                     await actor.attemptsTo(
-                        Wait.for(Duration.ofSeconds(2)),
-                        Press.the('Tab'),
-                        Wait.until(
-                            QuotingPage.ItemNameInputs.count(),
-                            equals(expectedCount)
-                        )
-                    );
-                } catch {
-                    await actor.attemptsTo(
-                        Wait.for(Duration.ofSeconds(2)),
                         Click.on(QuotingPage.AddItemButton),
-                        Press.the('Tab'),
-                        Wait.until(
-                            QuotingPage.ItemNameInputs.count(),
-                            equals(expectedCount)
-                        )
+                        Wait.for(Duration.ofSeconds(1)),
+                        Click.on(QuotingPage.AddItemButton),
+                    );
+                } else {
+                    await actor.attemptsTo(
+                        Click.on(QuotingPage.AddItemButton),
                     );
                 }
-            }
-
-            // 👉 llenar el item actual
-            if (c.length === 0 && c.width === 0 && c.height === 0) {
-                
 
                 await actor.attemptsTo(
-                    notes().set('bookeable', false),
+                    Press.the('Tab'),
+                    Wait.upTo(Duration.ofSeconds(10)).until(
+                        QuotingPage.ItemNameInputs.count(),
+                        equals(expectedCount)
+                    )
+                );
+            }
+
+            if (c.length === 0 && c.width === 0 && c.height === 0) {
+
+                await actor.attemptsTo(
                     Press.the('Tab'),
                     Enter.theValue(String(c.name)).into(QuotingPage.ItemNameInputs.nth(i)),
                     Press.the('Tab'),
@@ -97,7 +86,6 @@ export class FillDinamicQuote extends Task {
             }
         }
 
-        // 🔹 acciones finales
         await actor.attemptsTo(
             Wait.for(Duration.ofSeconds(3)),
             Click.on(QuotingPage.CargoDetailsText),

@@ -1,7 +1,7 @@
 import { Task, the, PerformsActivities, UsesAbilities } from '@serenity-js/core';
 import { Enter, Click, Press } from '@serenity-js/web';
-import { BookingPage } from '../userinterfaces/BookingPage';
-import { TestData } from '../models/TestData';
+import { BookingPage } from '../../userinterfaces/BookingPage';
+import { TestData } from '../../models/TestData';
 
 export class FillBookingPickUpDetails extends Task {
 
@@ -48,8 +48,8 @@ export class FillBookingPickUpDetails extends Task {
       Enter.theValue(String(d.PickupPhone)).into(BookingPage.contactPhone.nth(0)),
       Enter.theValue(String(d.PickupEmail)).into(BookingPage.contactEmail),
 
-      // 🔹 Date (ejemplo simple)
-      Enter.theValue('03/25/2026').into(BookingPage.pickupDate.nth(0)),
+      // 🔹 Date (today at runtime)
+      Enter.theValue(todayFormatted()).into(BookingPage.pickupDate.nth(0)),
 
       // 🔹 Time From
       Click.on(BookingPage.timeFrom.nth(0)),
@@ -63,4 +63,11 @@ export class FillBookingPickUpDetails extends Task {
       Press.the('Tab'),
     );
   }
+}
+
+function todayFormatted(): string {
+  const now = new Date();
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  return `${mm}/${dd}/${now.getFullYear()}`;
 }

@@ -1,8 +1,5 @@
 import { Question, AnswersQuestions, UsesAbilities } from '@serenity-js/core';
-import { Wait } from '@serenity-js/core';
-import { isVisible } from '@serenity-js/web';
-import { HomePage } from '../userinterfaces/HomePage';
-
+import { HomePage } from '../../userinterfaces/HomePage';
 
 export class TermsExist extends Question<Promise<boolean>> {
 
@@ -15,15 +12,7 @@ export class TermsExist extends Question<Promise<boolean>> {
     }
 
     async answeredBy(actor: AnswersQuestions & UsesAbilities): Promise<boolean> {
-
-        try {
-            await (actor as any).attemptsTo(
-                Wait.until(HomePage.Terms, isVisible())
-            );
-
-            return true;
-        } catch (error) {
-            return false;
-        }
+        const element = await HomePage.Terms.answeredBy(actor);
+        return element.isVisible();
     }
 }

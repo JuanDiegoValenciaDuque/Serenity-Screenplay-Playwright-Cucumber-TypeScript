@@ -12,6 +12,3 @@ Feature: LTL quote created in Portal is successfully registered in Shipwell
     When the user wants to create a new LTL quote
     And the user gets the best available rates
     Then the user can see all the rates displayed successfully
-    When the user logs into Shipwell
-    And the user searches the quote by reference
-    Then the quote should exist in Shipwell

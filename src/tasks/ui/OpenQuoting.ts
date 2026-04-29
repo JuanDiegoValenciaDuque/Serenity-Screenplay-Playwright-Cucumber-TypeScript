@@ -1,6 +1,6 @@
 import { Task, the, PerformsActivities } from '@serenity-js/core';
 import { Hover, isVisible, Click } from '@serenity-js/web';
-import { HomePage } from '../userinterfaces/HomePage';
+import { HomePage } from '../../userinterfaces/HomePage';
 import { Wait, Duration } from '@serenity-js/core';
 
 export class OpenQuoting extends Task {
