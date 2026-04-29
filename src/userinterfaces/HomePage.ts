@@ -15,8 +15,7 @@ export class HomePage {
     return PageElement.located(By.xpath("//span[normalize-space(text())='LTL/FTL']")).describedAs('LTL/FTL');
   }
 
-   static get Terms() {
-        return PageElement.located(By.xpath("//*[@id='root']/div/div/div/div[2]"))
-            .describedAs("Term");
-    }
+  static get Terms() {
+    return PageElement.located(By.xpath("//*[@id='root']/div/div/div/div[2]")).describedAs('Term');
+  }
 }

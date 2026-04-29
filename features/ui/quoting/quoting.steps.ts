@@ -15,5 +15,4 @@ When('the user gets the best available rates', async () => {
 
 Then('the user can see all the rates displayed successfully', async () => {
   await actorInTheSpotlight().attemptsTo(Ensure.that(AvailableRates.shown(), not(equals(null))));
-})
-
+});

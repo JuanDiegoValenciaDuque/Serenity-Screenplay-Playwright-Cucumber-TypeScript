@@ -16,20 +16,20 @@ Automation framework for the **PRIMO logistics platform** — a web portal for q
 
 ## Tech Stack
 
-| Package | Version | Role |
-|---|---|---|
-| `@serenity-js/core` | ^3.40.0 | Screenplay engine, actors, tasks, questions |
-| `@serenity-js/web` | ^3.40.0 | PageElement, PageElements, Click, Enter, Wait |
-| `@serenity-js/playwright` | ^3.40.0 | BrowseTheWebWithPlaywright ability |
-| `@serenity-js/assertions` | ^3.40.0 | `equals`, `includes`, `isVisible` |
-| `@serenity-js/rest` | ^3.40.0 | CallAnApi ability, Send, GetRequest, LastResponse |
-| `@serenity-js/cucumber` | ^3.40.0 | Serenity BDD Cucumber formatter |
-| `@serenity-js/serenity-bdd` | ^3.40.0 | HTML report generation |
-| `@cucumber/cucumber` | ^12.6.0 | Gherkin step binding |
-| `playwright` | ^1.58.2 | Browser launch and context |
-| `typescript` | ^5.9.3 | Type safety |
-| `xlsx` | ^0.18.5 | Excel test data reading |
-| `dotenv` | ^17.3.1 | Environment variables |
+| Package                     | Version | Role                                              |
+| --------------------------- | ------- | ------------------------------------------------- |
+| `@serenity-js/core`         | ^3.40.0 | Screenplay engine, actors, tasks, questions       |
+| `@serenity-js/web`          | ^3.40.0 | PageElement, PageElements, Click, Enter, Wait     |
+| `@serenity-js/playwright`   | ^3.40.0 | BrowseTheWebWithPlaywright ability                |
+| `@serenity-js/assertions`   | ^3.40.0 | `equals`, `includes`, `isVisible`                 |
+| `@serenity-js/rest`         | ^3.40.0 | CallAnApi ability, Send, GetRequest, LastResponse |
+| `@serenity-js/cucumber`     | ^3.40.0 | Serenity BDD Cucumber formatter                   |
+| `@serenity-js/serenity-bdd` | ^3.40.0 | HTML report generation                            |
+| `@cucumber/cucumber`        | ^12.6.0 | Gherkin step binding                              |
+| `playwright`                | ^1.58.2 | Browser launch and context                        |
+| `typescript`                | ^5.9.3  | Type safety                                       |
+| `xlsx`                      | ^0.18.5 | Excel test data reading                           |
+| `dotenv`                    | ^17.3.1 | Environment variables                             |
 
 ---
 
@@ -129,23 +129,28 @@ Serenity-Screenplay-Playwright-Cucumber-TypeScript/
 Defined in `support/Actors.ts`. Single Cast — every actor gets:
 
 ```typescript
-BrowseTheWebWithPlaywright.using(browser, contextOptions, extraOptions)
-CallAnApi.at(process.env.API_BASE_URL ?? browserContextOptions.baseURL!)
-TakeNotes.usingAnEmptyNotepad()
+BrowseTheWebWithPlaywright.using(browser, contextOptions, extraOptions);
+CallAnApi.at(process.env.API_BASE_URL ?? browserContextOptions.baseURL!);
+TakeNotes.usingAnEmptyNotepad();
 ```
 
 In API mode (`RUN_MODE=api`), `serenity.config.ts` uses `Cast.where()` instead — no browser launched:
 
 ```typescript
-Cast.where(actor => actor.whoCan(
-  CallAnApi.at(process.env.API_BASE_URL ?? 'https://jsonplaceholder.typicode.com'),
-  TakeNotes.usingAnEmptyNotepad(),
-))
+Cast.where(actor =>
+  actor.whoCan(
+    CallAnApi.at(process.env.API_BASE_URL ?? 'https://jsonplaceholder.typicode.com'),
+    TakeNotes.usingAnEmptyNotepad(),
+  ),
+);
 ```
 
 Actor initialized in `serenity.config.ts`:
+
 ```typescript
-Before(() => { actorCalled('User'); });
+Before(() => {
+  actorCalled('User');
+});
 ```
 
 ### Tasks
@@ -154,59 +159,59 @@ Extend `Task`, implement `performAs(actor)`. Created via static factory method.
 
 **UI Tasks** (`src/tasks/ui/`):
 
-| File | Factory | Purpose |
-|---|---|---|
-| `OpenSite.ts` | `OpenSite.at(url)` | Navigate to URL |
-| `PerformLogin.ts` | `PerformLogin.with(email?, pass?)` | Login — falls back to env vars |
-| `OpenQuoting.ts` | `OpenQuoting.LTL()` | Navigate to Quoting → LTL |
-| `FillQuote.ts` | `FillQuote.LTL()` | Fill static quote from quote.json |
-| `FillDynamicQuote.ts` | `FillDynamicQuote.ltl(testData)` | Fill quote from Excel TestData |
-| `SelectRandomRate.ts` | `SelectRandomRate.andBook(isBookable)` | Pick random rate, click Book |
-| `FillBookingPickUpDetails.ts` | `FillBookingPickUpDetails.with(data)` | Fill pickup section |
-| `FillBookingDeliveryDetails.ts` | `FillBookingDeliveryDetails.with(data)` | Fill delivery section |
-| `GLCodeThirdParty.ts` | `GLCodeThirdParty.with(data)` | Fill GL codes section |
-| `ConfirmBooking.ts` | `ConfirmBooking.now()` | Confirm booking (uses ConfirmBookingModal retry) |
+| File                            | Factory                                 | Purpose                                          |
+| ------------------------------- | --------------------------------------- | ------------------------------------------------ |
+| `OpenSite.ts`                   | `OpenSite.at(url)`                      | Navigate to URL                                  |
+| `PerformLogin.ts`               | `PerformLogin.with(email?, pass?)`      | Login — falls back to env vars                   |
+| `OpenQuoting.ts`                | `OpenQuoting.LTL()`                     | Navigate to Quoting → LTL                        |
+| `FillQuote.ts`                  | `FillQuote.LTL()`                       | Fill static quote from quote.json                |
+| `FillDynamicQuote.ts`           | `FillDynamicQuote.ltl(testData)`        | Fill quote from Excel TestData                   |
+| `SelectRandomRate.ts`           | `SelectRandomRate.andBook(isBookable)`  | Pick random rate, click Book                     |
+| `FillBookingPickUpDetails.ts`   | `FillBookingPickUpDetails.with(data)`   | Fill pickup section                              |
+| `FillBookingDeliveryDetails.ts` | `FillBookingDeliveryDetails.with(data)` | Fill delivery section                            |
+| `GLCodeThirdParty.ts`           | `GLCodeThirdParty.with(data)`           | Fill GL codes section                            |
+| `ConfirmBooking.ts`             | `ConfirmBooking.now()`                  | Confirm booking (uses ConfirmBookingModal retry) |
 
 **API Tasks** (`src/tasks/api/`) — use `Task.where()` factory:
 
-| File | Factory | Purpose |
-|---|---|---|
+| File         | Factory              | Purpose                                |
+| ------------ | -------------------- | -------------------------------------- |
 | `GetTodo.ts` | `GetTodo.withId(id)` | `Send.a(GetRequest.to('/todos/{id}'))` |
 
 ### Questions
 
 **UI Questions** (`src/questions/ui/`) — extend `Question<Promise<T>>` (async, browser-dependent):
 
-| File | Returns | Notes |
-|---|---|---|
-| `AvailableRates.ts` | `Promise<string[]>` | Rate price strings |
-| `PageTitle.ts` | `Promise<string>` | `Page.current().title()` |
-| `TermsExist.ts` | `Promise<boolean>` | Terms heading visibility |
-| `IsQuoteBookable.ts` | `boolean` | Pure data — no UI, extends `Question<boolean>` |
+| File                 | Returns             | Notes                                          |
+| -------------------- | ------------------- | ---------------------------------------------- |
+| `AvailableRates.ts`  | `Promise<string[]>` | Rate price strings                             |
+| `PageTitle.ts`       | `Promise<string>`   | `Page.current().title()`                       |
+| `TermsExist.ts`      | `Promise<boolean>`  | Terms heading visibility                       |
+| `IsQuoteBookable.ts` | `boolean`           | Pure data — no UI, extends `Question<boolean>` |
 
 **API Questions** (`src/questions/api/`) — use `Question.about()` factory (preferred v3 pattern):
 
-| File | Factory | Purpose |
-|---|---|---|
+| File              | Factory                 | Purpose                                        |
+| ----------------- | ----------------------- | ---------------------------------------------- |
 | `TodoResponse.ts` | `TodoResponse.userId()` | Reads `body.userId` from `LastResponse.body()` |
 
 ### Interactions
 
-| File | Factory | Purpose |
-|---|---|---|
-| `FillZipAuto.ts` | `FillZipAuto.with(input, listbox, zip)` | Type ZIP → wait autocomplete → ArrowDown + Enter |
-| `ConfirmBookingModal.ts` | `ConfirmBookingModal.open()` | Retry click confirm button up to 3 times (UI bug workaround) |
+| File                     | Factory                                 | Purpose                                                      |
+| ------------------------ | --------------------------------------- | ------------------------------------------------------------ |
+| `FillZipAuto.ts`         | `FillZipAuto.with(input, listbox, zip)` | Type ZIP → wait autocomplete → ArrowDown + Enter             |
+| `ConfirmBookingModal.ts` | `ConfirmBookingModal.open()`            | Retry click confirm button up to 3 times (UI bug workaround) |
 
 ### UserInterfaces (Page Objects)
 
 Pure locator classes — **no logic, no actions**.
 
-| File | Key Locators |
-|---|---|
-| `LoginPage.ts` | EmailField, PasswordField, LoginButton |
-| `HomePage.ts` | Menu, QuotingOption, QuotingLTL, Terms |
+| File             | Key Locators                                                                                                                                                          |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LoginPage.ts`   | EmailField, PasswordField, LoginButton                                                                                                                                |
+| `HomePage.ts`    | Menu, QuotingOption, QuotingLTL, Terms                                                                                                                                |
 | `QuotingPage.ts` | OriginZIP, DestinationZIP, listboxes, ItemName/Width/Height/Length/Weight/Volume inputs, AddItemButton, GetBestRatesButton, PriceRates, rates, infoButton, bookButton |
-| `BookingPage.ts` | Pickup section, Delivery section, GL Code section, confirmBookingButton, bookingConfirmedTitle |
+| `BookingPage.ts` | Pickup section, Delivery section, GL Code section, confirmBookingButton, bookingConfirmedTitle                                                                        |
 
 ---
 
@@ -243,9 +248,7 @@ Feature: TODO API validation
 ```typescript
 export class GetTodo {
   static withId(id: number) {
-    return Task.where(`#actor requests TODO with id ${id}`,
-      Send.a(GetRequest.to(`/todos/${id}`))
-    );
+    return Task.where(`#actor requests TODO with id ${id}`, Send.a(GetRequest.to(`/todos/${id}`)));
   }
 }
 ```
@@ -256,8 +259,7 @@ export class GetTodo {
 export class TodoResponse {
   static userId() {
     return Question.about('response userId', actor =>
-      actor.answer(LastResponse.body<{ userId: number }>())
-        .then(body => body.userId)
+      actor.answer(LastResponse.body<{ userId: number }>()).then(body => body.userId),
     );
   }
 }
@@ -267,7 +269,7 @@ export class TodoResponse {
 
 ```typescript
 Given('the actor calls the API', () => {
-  actorCalled('API Actor');   // cast gives it CallAnApi from API_BASE_URL
+  actorCalled('API Actor'); // cast gives it CallAnApi from API_BASE_URL
 });
 
 When('the actor requests TODO with id {int}', async (id: number) => {
@@ -275,9 +277,7 @@ When('the actor requests TODO with id {int}', async (id: number) => {
 });
 
 Then('the response status should be {int}', async (expectedStatus: number) => {
-  await actorInTheSpotlight().attemptsTo(
-    Ensure.that(LastResponse.status(), equals(expectedStatus))
-  );
+  await actorInTheSpotlight().attemptsTo(Ensure.that(LastResponse.status(), equals(expectedStatus)));
 });
 ```
 
@@ -351,27 +351,27 @@ npm start   # http://localhost:8080
 
 ## Naming Conventions
 
-| Layer | Convention | Example |
-|---|---|---|
-| Tasks | PascalCase verb + noun | `PerformLogin`, `FillDynamicQuote`, `GetTodo` |
-| Questions | PascalCase noun phrase | `AvailableRates`, `PageTitle`, `TodoResponse` |
-| Interactions | PascalCase verb phrase | `FillZipAuto`, `ConfirmBookingModal` |
-| UserInterfaces | PascalCase + `Page` suffix | `LoginPage`, `QuotingPage` |
-| Step files | `{domain}.steps.ts` | `login.steps.ts`, `todos.steps.ts` |
-| Feature files | `{domain}.feature` | `booking.feature`, `todos.feature` |
-| Tags | lowercase `@tag` | `@smoke`, `@regression`, `@api`, `@ui` |
+| Layer          | Convention                 | Example                                       |
+| -------------- | -------------------------- | --------------------------------------------- |
+| Tasks          | PascalCase verb + noun     | `PerformLogin`, `FillDynamicQuote`, `GetTodo` |
+| Questions      | PascalCase noun phrase     | `AvailableRates`, `PageTitle`, `TodoResponse` |
+| Interactions   | PascalCase verb phrase     | `FillZipAuto`, `ConfirmBookingModal`          |
+| UserInterfaces | PascalCase + `Page` suffix | `LoginPage`, `QuotingPage`                    |
+| Step files     | `{domain}.steps.ts`        | `login.steps.ts`, `todos.steps.ts`            |
+| Feature files  | `{domain}.feature`         | `booking.feature`, `todos.feature`            |
+| Tags           | lowercase `@tag`           | `@smoke`, `@regression`, `@api`, `@ui`        |
 
 ---
 
 ## Active Test Flows
 
-| Tag | Feature | Type | Status |
-|---|---|---|---|
-| `@login` | Login with static credentials | UI | Working |
-| `@logterms` | Login parameterized (Scenario Outline) | UI | Working |
-| `@smoke @quoting` | LTL quote creation (static data) | UI | Working |
-| `@shipwell` | LTL quote via Excel + full booking | UI | Working |
-| `@api @regression` | GET /todos/{id} validation | API | Template — ready |
+| Tag                | Feature                                | Type | Status           |
+| ------------------ | -------------------------------------- | ---- | ---------------- |
+| `@login`           | Login with static credentials          | UI   | Working          |
+| `@logterms`        | Login parameterized (Scenario Outline) | UI   | Working          |
+| `@smoke @quoting`  | LTL quote creation (static data)       | UI   | Working          |
+| `@shipwell`        | LTL quote via Excel + full booking     | UI   | Working          |
+| `@api @regression` | GET /todos/{id} validation             | API  | Template — ready |
 
 ---
 

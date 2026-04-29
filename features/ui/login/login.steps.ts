@@ -23,8 +23,8 @@ When('the user logs in with credentials', async () => {
 
 When('the user logs in with {string} and {string}', async (email: string, password: string) => {
   await actorInTheSpotlight().attemptsTo(PerformLogin.with(email, password));
-})
- 
+});
+
 Then('user read the terms', async () => {
   await actorInTheSpotlight().attemptsTo(Ensure.that(TermsExist.check(), isTrue()));
-})
+});

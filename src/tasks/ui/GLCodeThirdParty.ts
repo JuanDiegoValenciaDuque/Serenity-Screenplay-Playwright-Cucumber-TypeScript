@@ -4,7 +4,6 @@ import { Click, Enter, isEnabled, isVisible } from '@serenity-js/web';
 import { BookingPage } from '../../userinterfaces/BookingPage';
 
 export class GLCodeThirdParty extends Task {
-
   static with(data: TestData) {
     return new GLCodeThirdParty(data);
   }
@@ -14,11 +13,9 @@ export class GLCodeThirdParty extends Task {
   }
 
   async performAs(actor: UsesAbilities & PerformsActivities): Promise<void> {
-
     const d = this.data;
 
-       await actor.attemptsTo(
-
+    await actor.attemptsTo(
       // Enterprise Tag
       Click.on(BookingPage.enterpriseTag),
       Wait.until(BookingPage.dropdownOptions.first(), isVisible()),
@@ -35,29 +32,22 @@ export class GLCodeThirdParty extends Task {
       Click.on(BookingPage.dropdownOptions.first()),
 
       ...(d.ThirdPartyReference
-        ? [
-            Enter.theValue(String(d.ThirdPartyReference))
-              .into(BookingPage.thirdPartyReference),
-          ]
+        ? [Enter.theValue(String(d.ThirdPartyReference)).into(BookingPage.thirdPartyReference)]
         : []),
-
 
       // 🔹 Additional Reference + Reference Name (dependientes)
       ...(d.AdditionalReference
         ? [
-
-            Enter.theValue(String(d.AdditionalReference))
-              .into(BookingPage.additionalReference.nth(2)),
+            Enter.theValue(String(d.AdditionalReference)).into(BookingPage.additionalReference.nth(2)),
 
             // 🔥 esperar a que se habilite el campo dependiente
             Wait.until(BookingPage.referenceName, isEnabled()),
 
-            Enter.theValue(String(d.ReferenceNumber))
-              .into(BookingPage.referenceName),
+            Enter.theValue(String(d.ReferenceNumber)).into(BookingPage.referenceName),
           ]
         : []),
 
-        Wait.for(Duration.ofSeconds(3)),
+      Wait.for(Duration.ofSeconds(3)),
     );
   }
 }

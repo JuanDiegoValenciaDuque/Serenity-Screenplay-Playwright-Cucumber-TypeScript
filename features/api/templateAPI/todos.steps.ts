@@ -6,21 +6,17 @@ import { GetTodo } from '../../../src/tasks/api/GetTodo';
 import { TodoResponse } from '../../../src/questions/api/TodoResponse';
 
 Given('the actor calls the API', () => {
-    actorCalled('API Actor');
+  actorCalled('API Actor');
 });
 
 When('the actor requests TODO with id {int}', async (id: number) => {
-    await actorInTheSpotlight().attemptsTo(GetTodo.withId(id));
+  await actorInTheSpotlight().attemptsTo(GetTodo.withId(id));
 });
 
 Then('the response status should be {int}', async (expectedStatus: number) => {
-    await actorInTheSpotlight().attemptsTo(
-        Ensure.that(LastResponse.status(), equals(expectedStatus))
-    );
+  await actorInTheSpotlight().attemptsTo(Ensure.that(LastResponse.status(), equals(expectedStatus)));
 });
 
 Then('the userId should be {int}', async (expectedUserId: number) => {
-    await actorInTheSpotlight().attemptsTo(
-        Ensure.that(TodoResponse.userId(), equals(expectedUserId))
-    );
+  await actorInTheSpotlight().attemptsTo(Ensure.that(TodoResponse.userId(), equals(expectedUserId)));
 });

@@ -49,15 +49,13 @@ export class QuotingPage {
   }
 
   static get PriceRates() {
-    return PageElements.located(By.xpath("//h6[starts-with(normalize-space(),'$')]")).describedAs(
-      'Price Rates',
-    );
+    return PageElements.located(By.xpath("//h6[starts-with(normalize-space(),'$')]")).describedAs('Price Rates');
   }
 
   static get AddItemButton() {
-    return PageElement.located(By.xpath("//*[@id='root']/div/div/main/div[2]/div/div[3]/div[2]/div/div/div/div/div[2]/button")).describedAs(
-      'Add Item button',
-    );
+    return PageElement.located(
+      By.xpath("//*[@id='root']/div/div/main/div[2]/div/div[3]/div[2]/div/div/div/div/div[2]/button"),
+    ).describedAs('Add Item button');
   }
 
   static get ItemNameInputs() {
@@ -86,19 +84,17 @@ export class QuotingPage {
 
   static get rates() {
     return PageElements.located(
-      By.xpath("//div[contains(@class,'MuiBox-root') and contains(@class,'css-cy64ft') and contains(@class,'e1de0imv0')]")
+      By.xpath(
+        "//div[contains(@class,'MuiBox-root') and contains(@class,'css-cy64ft') and contains(@class,'e1de0imv0')]",
+      ),
     ).describedAs('Price Rates');
   }
 
   static get infoButton() {
-    return PageElement.located(
-      By.xpath("//button[.//text()='Info']")
-    ).describedAs('Info button');
+    return PageElement.located(By.xpath("//button[.//text()='Info']")).describedAs('Info button');
   }
 
   static get bookButton() {
-    return PageElement.located(
-      By.xpath("//button[normalize-space()='Book']")
-    ).describedAs('Book button');
+    return PageElement.located(By.xpath("//button[normalize-space()='Book']")).describedAs('Book button');
   }
 }

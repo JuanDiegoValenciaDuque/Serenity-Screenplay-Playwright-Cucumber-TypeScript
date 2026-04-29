@@ -2,7 +2,6 @@ import { Question, AnswersQuestions, UsesAbilities } from '@serenity-js/core';
 import { Page } from '@serenity-js/web';
 
 export class PageTitle extends Question<Promise<string>> {
-
   static ofThePage() {
     return new PageTitle();
   }
