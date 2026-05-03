@@ -52,9 +52,12 @@ Serenity-Screenplay-Playwright-Cucumber-TypeScript/
 │   │       └── quoting.steps.ts
 │   │
 │   └── api/                            ← API (no browser) test scenarios
-│       └── templateAPI/
-│           ├── todos.feature           ← @api @regression — GET /todos/{id}
-│           └── todos.steps.ts
+│       ├── templateAPI/
+│       │   ├── todos.feature           ← @api @regression — GET /todos/{id}
+│       │   └── todos.steps.ts
+│       └── booking/
+│           ├── booking.feature         ← @api @primo — full PRIMO LTL booking flow (Auth → Quote → Book)
+│           └── booking.steps.ts
 │
 ├── support/                            ← Framework setup (root level, NOT inside features/)
 │   ├── Actors.ts                       ← Cast implementation
@@ -75,7 +78,10 @@ Serenity-Screenplay-Playwright-Cucumber-TypeScript/
 │   │   │   └── ConfirmBooking.ts
 │   │   │
 │   │   └── api/                        ← API Tasks (HTTP requests)
-│   │       └── GetTodo.ts              ← Task.where() — GET /todos/{id}
+│   │       ├── GetTodo.ts              ← Task.where() — GET /todos/{id}
+│   │       ├── ObtainToken.ts          ← POST identity.primofabric.com/connect/token → stores bearerToken in notes
+│   │       ├── CreateQuote.ts          ← POST api.primofabric.com/portal/v2/quote → stores quoteNumber + selectedCarrier in notes
+│   │       └── BookShipment.ts         ← POST api.primofabric.com/portal/v1/book — multipart/form-data, reads notes for auth + quote data
 │   │
 │   ├── questions/
 │   │   ├── ui/                         ← UI Questions (DOM/page queries)
@@ -85,7 +91,9 @@ Serenity-Screenplay-Playwright-Cucumber-TypeScript/
 │   │   │   └── IsQuoteBookable.ts      ← Pure data — derives bookability from TestData (no UI)
 │   │   │
 │   │   └── api/                        ← API Questions (response queries)
-│   │       └── TodoResponse.ts         ← Question.about() — reads fields from LastResponse.body()
+│   │       ├── TodoResponse.ts         ← Question.about() — reads fields from LastResponse.body()
+│   │       ├── QuoteResponse.ts        ← quoteNumber, firstCarrierRateNumber from LastResponse
+│   │       └── BookingResponse.ts      ← orderNumber, bolNumber from LastResponse
 │   │
 │   ├── interactions/                   ← Low-level primitives (always UI)
 │   │   ├── FillZipAuto.ts              ← ZIP autocomplete: type → wait listbox → ArrowDown + Enter
@@ -99,6 +107,7 @@ Serenity-Screenplay-Playwright-Cucumber-TypeScript/
 │   │
 │   ├── models/
 │   │   ├── TestData.ts                 ← Interface for Excel row (CaseID → C5_Stackable)
+│   │   ├── PrimoNotes.ts               ← Interface PrimoNotes { bearerToken, quoteNumber, selectedCarrier }
 │   │   └── Shipwell_TestCases.xlsx     ← Excel test data (sheet: 'LTL')
 │   │
 │   └── utils/
@@ -281,6 +290,36 @@ Then('the response status should be {int}', async (expectedStatus: number) => {
 });
 ```
 
+### PRIMO API pattern — multi-base-URL + notes
+
+The PRIMO booking flow uses **two different base URLs** (identity + api), so tasks use **absolute URLs** that override the `CallAnApi` base URL. Data flows between steps via `notes<PrimoNotes>()`.
+
+```
+ObtainToken.forPrimoApi()
+  → POST identity.primofabric.com/connect/token (form-urlencoded, no auth)
+  → stores access_token → notes.bearerToken
+
+CreateQuote.forLtl()
+  → POST api.primofabric.com/portal/v2/quote (JSON, reads notes.bearerToken)
+  → stores data.quoteNumber → notes.quoteNumber
+  → stores data.carrierQuotes[0].rateNumber → notes.selectedCarrier
+
+BookShipment.withQuoteData()
+  → POST api.primofabric.com/portal/v1/book (multipart/form-data, reads all notes)
+  → movement field is JSON.stringify(movementObject) within FormData
+```
+
+Tasks that need auth headers use `Interaction.where()` internally to read notes before sending the request:
+
+```typescript
+Interaction.where('#actor sends request', async actor => {
+  const token = await actor.answer(notes<PrimoNotes>().get('bearerToken'));
+  await actor.attemptsTo(
+    Send.a(PostRequest.to('https://...').with(body).using({ headers: { Authorization: `Bearer ${token}` } }))
+  );
+})
+```
+
 ---
 
 ## Runner — API runs once, UI runs per browser
@@ -378,6 +417,7 @@ npm start   # http://localhost:8080
 | `@smoke @quoting`  | LTL quote creation (static data)       | UI   | Working          |
 | `@shipwell`        | LTL quote via Excel + full booking     | UI   | Working          |
 | `@api @regression` | GET /todos/{id} validation             | API  | Template — ready |
+| `@api @primo`      | Auth → Quote → Book (LTL via PRIMO API)| API  | Working          |
 
 ---
 

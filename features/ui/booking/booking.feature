@@ -21,3 +21,4 @@ Feature: LTL quote created in Portal is successfully registered in Shipwell
     Examples:
       | CaseID |
       | TC-235 |
+      | Random |
