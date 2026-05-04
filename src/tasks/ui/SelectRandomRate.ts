@@ -9,7 +9,7 @@ import {
   Check,
   Answerable,
 } from '@serenity-js/core';
-import { Hover, Click, isVisible } from '@serenity-js/web';
+import { Hover, Click, isVisible, ExecuteScript } from '@serenity-js/web';
 import { QuotingPage } from '../../userinterfaces/QuotingPage';
 import { BookingPage } from '../../userinterfaces/BookingPage';
 import { isTrue } from '@serenity-js/assertions';
@@ -34,6 +34,7 @@ export class SelectRandomRate extends Task {
       Check.whether(this.isBookable, isTrue()).andIfSo(
         Click.on(QuotingPage.bookButton),
         Wait.upTo(Duration.ofSeconds(30)).until(BookingPage.pickupAddressTitle, isVisible()),
+        ExecuteScript.sync('arguments[0].scrollIntoView({ block: "center" });').withArguments(BookingPage.pickupAddressTitle),         
       ),
     );
   }

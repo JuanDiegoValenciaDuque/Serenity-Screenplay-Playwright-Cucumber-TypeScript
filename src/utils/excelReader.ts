@@ -16,6 +16,10 @@ export class ExcelReader {
   }
 
   static getRowByCaseId(data: TestData[], caseId: string): TestData {
+    if (caseId === 'Random') {
+      return data[Math.floor(Math.random() * data.length)];
+    }
+
     const row = data.find(r => r.CaseID === caseId);
 
     if (!row) {

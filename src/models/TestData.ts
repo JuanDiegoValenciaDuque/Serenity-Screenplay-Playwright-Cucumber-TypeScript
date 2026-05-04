@@ -29,10 +29,10 @@ export interface TestData {
   C1_Width: number;
   C1_Height: number;
   C1_Weight: number;
-  C1_Volume: number;
   C1_Hazmat: string;
   C1_NMFC: string;
   C1_Stackable: string;
+  C1_Levels: number;
 
   C2_Qty: number;
   C2_Name: string;
@@ -41,10 +41,10 @@ export interface TestData {
   C2_Width: number;
   C2_Height: number;
   C2_Weight: number;
-  C2_Volume: number;
   C2_Hazmat: string;
   C2_NMFC: string;
   C2_Stackable: string;
+  C2_Levels: number;
 
   C3_Qty: number;
   C3_Name: string;
@@ -53,10 +53,10 @@ export interface TestData {
   C3_Width: number;
   C3_Height: number;
   C3_Weight: number;
-  C3_Volume: number;
   C3_Hazmat: string;
   C3_NMFC: string;
   C3_Stackable: string;
+  C3_Levels: number;
 
   C4_Qty: number;
   C4_Name: string;
@@ -65,10 +65,10 @@ export interface TestData {
   C4_Width: number;
   C4_Height: number;
   C4_Weight: number;
-  C4_Volume: number;
   C4_Hazmat: string;
   C4_NMFC: string;
   C4_Stackable: string;
+  C4_Levels: number;
 
   C5_Qty: number;
   C5_Name: string;
@@ -77,10 +77,15 @@ export interface TestData {
   C5_Width: number;
   C5_Height: number;
   C5_Weight: number;
-  C5_Volume: number;
   C5_Hazmat: string;
   C5_NMFC: string;
   C5_Stackable: string;
+  C5_Levels: number;
+
+  PickupWindowFrom: string;
+  PickupWindowTo: string;
+  DeliveryWindowFrom: string;
+  DeliveryWindowTo: string;
 
   Accessorial1: string;
   Accessorial2: string;

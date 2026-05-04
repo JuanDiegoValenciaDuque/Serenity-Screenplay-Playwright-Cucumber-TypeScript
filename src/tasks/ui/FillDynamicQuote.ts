@@ -1,5 +1,5 @@
 import { Task, the, PerformsActivities, UsesAbilities, Wait, Duration } from '@serenity-js/core';
-import { Enter, Click, isVisible, Press } from '@serenity-js/web';
+import { Enter, Click, isVisible, Press, ExecuteScript } from '@serenity-js/web';
 import { QuotingPage } from '../../userinterfaces/QuotingPage';
 import { FillZipAuto } from '../../interactions/FillZipAuto';
 import { TestData } from '../../models/TestData';
@@ -30,16 +30,11 @@ export class FillDynamicQuote extends Task {
       if (i > 0) {
         const expectedCount = i + 1;
 
-        if (i === 1) {
-          // UI behavior: first AddItem always requires two clicks to register
-          await actor.attemptsTo(
-            Click.on(QuotingPage.AddItemButton),
-            Wait.for(Duration.ofSeconds(1)),
-            Click.on(QuotingPage.AddItemButton),
-          );
-        } else {
-          await actor.attemptsTo(Click.on(QuotingPage.AddItemButton));
-        }
+        await actor.attemptsTo(
+          Click.on(QuotingPage.AddItemButton),
+          Wait.for(Duration.ofSeconds(1)),
+          Click.on(QuotingPage.AddItemButton),
+        );
 
         await actor.attemptsTo(
           Press.the('Tab'),
@@ -50,6 +45,7 @@ export class FillDynamicQuote extends Task {
       if (c.length === 0 && c.width === 0 && c.height === 0) {
         await actor.attemptsTo(
           Press.the('Tab'),
+          ExecuteScript.sync('arguments[0].scrollIntoView({ block: "center" });').withArguments(QuotingPage.ItemNameInputs.nth(i)),
           Enter.theValue(String(c.name)).into(QuotingPage.ItemNameInputs.nth(i)),
           Press.the('Tab'),
           Enter.theValue(String(c.weight)).into(QuotingPage.WeightInputs.nth(i)),
@@ -61,6 +57,7 @@ export class FillDynamicQuote extends Task {
         await actor.attemptsTo(
           Wait.for(Duration.ofSeconds(3)),
           Press.the('Tab'),
+          ExecuteScript.sync('arguments[0].scrollIntoView({ block: "center" });').withArguments(QuotingPage.ItemNameInputs.nth(i)),
           Enter.theValue(String(c.name)).into(QuotingPage.ItemNameInputs.nth(i)),
           Press.the('Tab'),
           Enter.theValue(String(c.length)).into(QuotingPage.LengthInputs.nth(i)),

@@ -4,6 +4,8 @@ import { Ensure, isGreaterThan, isPresent, equals } from '@serenity-js/assertion
 import { ObtainToken } from '../../../src/tasks/api/ObtainToken';
 import { CreateQuote } from '../../../src/tasks/api/CreateQuote';
 import { BookShipment } from '../../../src/tasks/api/BookShipment';
+import { ResolveZipCode } from '../../../src/tasks/api/ResolveZipCode';
+import { ResolveDensity } from '../../../src/tasks/api/ResolveDensity';
 import { QuoteResponse } from '../../../src/questions/api/QuoteResponse';
 import { BookingResponse } from '../../../src/questions/api/BookingResponse';
 import { GetTodo } from '../../../src/tasks/api/GetTodo';
@@ -33,6 +35,14 @@ Given('the actor is configured to call PRIMO APIs', () => {
 
 When('the actor obtains a PRIMO API bearer token', async () => {
   await actorInTheSpotlight().attemptsTo(ObtainToken.forPrimoApi());
+});
+
+When('the actor resolves city and state for origin and destination', async () => {
+  await actorInTheSpotlight().attemptsTo(ResolveZipCode.forOriginAndDestination());
+});
+
+When('the actor resolves density and class for each commodity', async () => {
+  await actorInTheSpotlight().attemptsTo(ResolveDensity.forAllCommodities());
 });
 
 When('the actor creates an LTL quote from Boston MA to Cleveland OH', async () => {
