@@ -542,20 +542,62 @@ Both configure `cucumber.cucumber-official` extension with the correct glue path
 
 ## Running Tests
 
+### `npm test` — Main runner (`runners/executeallbrowsers.ts`)
+
+Always runs **API tests first** (once, no browser), then **UI tests** on each specified browser.
+
+**Arguments:**
+
+| Argument | Format | Default | Description |
+|----------|--------|---------|-------------|
+| `tag=` | `@tag` or `@tag1,@tag2` | none (all scenarios) | Cucumber tag expression. Multiple tags joined with `or` internally |
+| `browsers=` | `chromium`, `webkit`, or both comma-separated | `chromium,webkit` | Browsers for UI tests only |
+
 ```bash
-# All: API once + UI on chromium + webkit
+# All tests: API + UI on chromium and webkit (no tag filter)
 npm test
 
-# Single browser
+# Tag filter — API + UI on chromium and webkit
+npm test -- tag="@login"
+npm test -- tag="@api"
+npm test -- tag="@api @primo"
+
+# Multiple tags — joined with OR internally
+npm test -- tag="@api,@login"
+# equivalent to: --tags "@api or @login"
+
+# Tag filter + single browser
+npm test -- tag="@login" browsers="webkit"
+npm test -- tag="@login" browsers="chromium"
+
+# Tag filter + multiple browsers (explicit)
+npm test -- tag="@api,@login" browsers="chromium,webkit"
+
+# No tag filter, single browser
+npm test -- browsers="webkit"
+npm test -- browsers="chromium"
+```
+
+> **Note:** API tests (`features/api/`) always run regardless of the `browsers=` argument. The `browsers=` argument only affects UI tests (`features/ui/`).
+
+### Direct scripts (UI only, no consolidated report)
+
+```bash
+# UI on chromium only — no tag filter
 npm run test:chromium
+
+# UI on webkit only — no tag filter
 npm run test:webkit
+```
 
-# Tag filter
-npx ts-node runners/executeallbrowsers.ts tag=@api,@primo browsers=chromium
+### Report
 
-# Report
+```bash
+# Generate consolidated HTML report (run after npm test)
 npm run test:report
-npm start   # http://localhost:8080
+
+# Serve report at http://localhost:8080
+npm start
 ```
 
 ---

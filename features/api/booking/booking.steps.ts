@@ -45,9 +45,9 @@ When('the actor resolves density and class for each commodity', async () => {
   await actorInTheSpotlight().attemptsTo(ResolveDensity.forAllCommodities());
 });
 
-When('the actor creates an LTL quote from Boston MA to Cleveland OH', async () => {
-  await actorInTheSpotlight().attemptsTo(CreateQuote.forLtl());
-});
+When('the actor creates an LTL quote from origin to destination', async () => {
+   await actorInTheSpotlight().attemptsTo(CreateQuote.forLtl());
+})
 
 When('the actor books the first carrier from the quote', async () => {
   await actorInTheSpotlight().attemptsTo(BookShipment.withQuoteData());
@@ -64,3 +64,5 @@ Then('the response contains a BOL number', async () => {
 Then('the response contains an order number', async () => {
   await actorInTheSpotlight().attemptsTo(Ensure.that(BookingResponse.orderNumber(), isGreaterThan(0)));
 });
+
+

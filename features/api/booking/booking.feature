@@ -9,7 +9,7 @@ Feature: PRIMO LTL booking via API
     Then the response status should be 200
     When the actor resolves city and state for origin and destination
     And the actor resolves density and class for each commodity
-    And the actor creates an LTL quote from Boston MA to Cleveland OH
+    And the actor creates an LTL quote from origin to destination
     Then the response status should be 200
     And the response contains a valid quote number
     When the actor books the first carrier from the quote
@@ -19,4 +19,4 @@ Feature: PRIMO LTL booking via API
 
     Examples:
       | CaseID |
-      | TC-103 |
+      | TC-001 |
