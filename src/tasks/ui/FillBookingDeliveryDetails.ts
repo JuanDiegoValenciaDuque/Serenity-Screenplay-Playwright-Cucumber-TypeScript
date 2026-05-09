@@ -4,7 +4,6 @@ import { BookingPage } from '../../userinterfaces/BookingPage';
 import { TestData } from '../../models/TestData';
 
 export class FillBookingDeliveryDetails extends Task {
-
   static with(data: TestData) {
     return new FillBookingDeliveryDetails(data);
   }
@@ -14,7 +13,6 @@ export class FillBookingDeliveryDetails extends Task {
   }
 
   async performAs(actor: UsesAbilities & PerformsActivities): Promise<void> {
-
     const d = this.data;
 
     await actor.attemptsTo(
@@ -27,22 +25,15 @@ export class FillBookingDeliveryDetails extends Task {
 
     // 🔹 Address 2
     if (d.DeliveryAddress2 && d.DeliveryAddress2.trim() !== '') {
-      await actor.attemptsTo(
-        Enter.theValue(d.DeliveryAddress2)
-          .into(BookingPage.address2Delivery)
-      );
+      await actor.attemptsTo(Enter.theValue(d.DeliveryAddress2).into(BookingPage.address2Delivery));
     }
 
     // 🔹 Reference
     if (d.DeliveryRef && d.DeliveryRef.trim() !== '') {
-      await actor.attemptsTo(
-        Enter.theValue(d.DeliveryRef)
-          .into(BookingPage.referenceNumberDelivery)
-      );
+      await actor.attemptsTo(Enter.theValue(d.DeliveryRef).into(BookingPage.referenceNumberDelivery));
     }
 
     await actor.attemptsTo(
-
       // 🔹 Contact
       Enter.theValue(String(d.DeliveryContact)).into(BookingPage.contactNameDelivery),
       Enter.theValue(String(d.DeliveryPhone)).into(BookingPage.contactPhone.nth(1)),

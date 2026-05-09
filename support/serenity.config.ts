@@ -35,10 +35,12 @@ Before(() => {
 BeforeAll(async () => {
   if (isApiMode) {
     configure({
-      actors: Cast.where(actor => actor.whoCan(
-        CallAnApi.at(process.env.API_BASE_URL ?? 'https://jsonplaceholder.typicode.com'),
-        TakeNotes.usingAnEmptyNotepad(),
-      )),
+      actors: Cast.where(actor =>
+        actor.whoCan(
+          CallAnApi.at(process.env.API_BASE_URL ?? 'https://jsonplaceholder.typicode.com'),
+          TakeNotes.usingAnEmptyNotepad(),
+        ),
+      ),
       crew: [
         ['@serenity-js/console-reporter', { theme: 'auto' }],
         ['@serenity-js/core:ArtifactArchiver', { outputDirectory }],

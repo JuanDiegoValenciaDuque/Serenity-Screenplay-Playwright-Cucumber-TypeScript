@@ -4,7 +4,6 @@ import { BookingPage } from '../../userinterfaces/BookingPage';
 import { ConfirmBookingModal } from '../../interactions/ConfirmBookingModal';
 
 export class ConfirmBooking extends Task {
-
   static now() {
     return new ConfirmBooking();
   }
@@ -17,7 +16,7 @@ export class ConfirmBooking extends Task {
     await actor.attemptsTo(
       ConfirmBookingModal.open(),
       Click.on(BookingPage.confirmBookingButton.nth(1)),
-      Wait.upTo(Duration.ofSeconds(120)).until(BookingPage.bookingConfirmedTitle, isVisible())
+      Wait.upTo(Duration.ofSeconds(120)).until(BookingPage.bookingConfirmedTitle, isVisible()),
     );
   }
 }

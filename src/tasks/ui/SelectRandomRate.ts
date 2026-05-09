@@ -1,11 +1,20 @@
-import { Task, the, PerformsActivities, UsesAbilities, AnswersQuestions, Wait, Duration, Check, Answerable } from '@serenity-js/core';
-import { Hover, Click, isVisible } from '@serenity-js/web';
+import {
+  Task,
+  the,
+  PerformsActivities,
+  UsesAbilities,
+  AnswersQuestions,
+  Wait,
+  Duration,
+  Check,
+  Answerable,
+} from '@serenity-js/core';
+import { Hover, Click, isVisible, ExecuteScript } from '@serenity-js/web';
 import { QuotingPage } from '../../userinterfaces/QuotingPage';
 import { BookingPage } from '../../userinterfaces/BookingPage';
 import { isTrue } from '@serenity-js/assertions';
 
 export class SelectRandomRate extends Task {
-
   static andBook(isBookable: Answerable<boolean>) {
     return new SelectRandomRate(isBookable);
   }
@@ -15,7 +24,6 @@ export class SelectRandomRate extends Task {
   }
 
   async performAs(actor: UsesAbilities & PerformsActivities & AnswersQuestions): Promise<void> {
-
     const count = await QuotingPage.rates.count().answeredBy(actor);
     const randomIndex = Math.floor(Math.random() * count);
     const randomRate = QuotingPage.rates.nth(randomIndex);
@@ -23,12 +31,11 @@ export class SelectRandomRate extends Task {
     await actor.attemptsTo(
       Hover.over(randomRate),
       Click.on(QuotingPage.infoButton),
-      Check.whether(this.isBookable, isTrue())
-        .andIfSo(
-          Click.on(QuotingPage.bookButton),
-          Wait.upTo(Duration.ofSeconds(30))
-            .until(BookingPage.pickupAddressTitle, isVisible())
-        )
+      Check.whether(this.isBookable, isTrue()).andIfSo(
+        Click.on(QuotingPage.bookButton),
+        Wait.upTo(Duration.ofSeconds(30)).until(BookingPage.pickupAddressTitle, isVisible()),
+        ExecuteScript.sync('arguments[0].scrollIntoView({ block: "center" });').withArguments(BookingPage.pickupAddressTitle),         
+      ),
     );
   }
 }

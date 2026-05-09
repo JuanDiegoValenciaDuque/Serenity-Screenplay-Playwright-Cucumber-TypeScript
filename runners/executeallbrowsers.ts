@@ -7,7 +7,10 @@ function getTagFromArgs(): string | undefined {
     return undefined;
   }
   const raw = tagsArgument.split('=')[1];
-  return raw.split(',').map(t => t.trim()).join(' or ');
+  return raw
+    .split(',')
+    .map(t => t.trim())
+    .join(' or ');
 }
 
 function getBrowsersFromArgs(): string[] {
@@ -32,7 +35,7 @@ console.log('Running API tests (once, no browser)...');
 try {
   runApiTests(tag);
 } catch (error) {
-  console.error('API tests failed');
+  console.error('API tests failed', error);
 }
 
 for (const browser of browsers) {
@@ -40,7 +43,7 @@ for (const browser of browsers) {
   try {
     runTestsByTag(tag, browser);
   } catch (error) {
-    console.error(`${browser} failed`);
+    console.error(`${browser} failed`, error);
   }
 }
 

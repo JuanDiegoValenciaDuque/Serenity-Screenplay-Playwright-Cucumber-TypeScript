@@ -8,7 +8,13 @@ Feature: LTL quote created in Portal is successfully registered in Shipwell
     Given the user opens the Portal site
     When the user logs in with credentials
 
-  Scenario: LTL quote is created in Shipwell
+  Scenario Outline: LTL quote is created in Shipwell
+    Given I load the Excel file from "src/models/Shipwell_TestCases_filtered.xlsx"
+    And I get test data for "<CaseID>"
     When the user wants to create a new LTL quote
-    And the user gets the best available rates
+    And the user fills booking a new LTL quote using Excel data
     Then the user can see all the rates displayed successfully
+
+    Examples:
+      | CaseID |
+      | TC-103 |
