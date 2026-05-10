@@ -63,9 +63,9 @@ stages:
             displayName: 'Generate Serenity HTML report'
             condition: always()
 
-          - task: PublishBuildArtifacts@1
-            displayName: 'Upload report artifact'
+          - task: PublishHtmlReport@1
+            displayName: 'Publish Serenity report'
             condition: always()
             inputs:
-              PathtoPublish: 'target/site/serenity/report'
-              ArtifactName: 'serenity-report'
+              reportDir: 'target/site/serenity/report'
+              tabName: 'Serenity Report'
