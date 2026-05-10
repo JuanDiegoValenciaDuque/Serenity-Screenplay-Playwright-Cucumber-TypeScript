@@ -15,7 +15,6 @@ pool:
 
 variables:
   NODE_VERSION: '22'
-  JAVA_VERSION: '17'
 
 stages:
   - stage: Test
@@ -25,13 +24,6 @@ stages:
         displayName: 'API + UI Tests (Chromium & WebKit)'
         timeoutInMinutes: 60
         steps:
-          - task: JavaToolInstaller@0
-            displayName: 'Set up Java $(JAVA_VERSION)'
-            inputs:
-              versionSpec: '$(JAVA_VERSION)'
-              jdkArchitectureOption: 'x64'
-              jdkSourceOption: 'PreInstalled'
-
           - task: NodeTool@0
             displayName: 'Set up Node.js $(NODE_VERSION)'
             inputs:
