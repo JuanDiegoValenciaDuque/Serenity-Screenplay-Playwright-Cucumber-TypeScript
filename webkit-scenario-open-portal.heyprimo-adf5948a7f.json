@@ -1,0 +1,241 @@
+{
+  "id": "login-to-the-portal-and-see-terms;open-portal-heyprimo",
+  "name": "open portal.heyprimo",
+  "title": "open portal.heyprimo",
+  "manual": false,
+  "testSteps": [
+    {
+      "number": 1,
+      "description": "Before",
+      "startTime": "2026-05-10T05:58:49.677Z",
+      "children": [],
+      "reportData": [],
+      "screenshots": [],
+      "duration": 25,
+      "result": "SUCCESS"
+    },
+    {
+      "number": 2,
+      "description": "Given the user opens the Portal site",
+      "startTime": "2026-05-10T05:58:49.706Z",
+      "children": [
+        {
+          "number": 3,
+          "description": "User opens the site at &quot;https://portal.primofabric.com&quot;",
+          "startTime": "2026-05-10T05:58:49.898Z",
+          "children": [
+            {
+              "number": 4,
+              "description": "User navigates to &quot;https://portal.primofabric.com&quot;",
+              "startTime": "2026-05-10T05:58:50.036Z",
+              "children": [],
+              "reportData": [],
+              "screenshots": [
+                {
+                  "screenshot": "photo-win32-webkit-26.0-user-navigates-to-https-portal.primofabric.-b2520c043f.png",
+                  "screenshotName": "photo-win32-webkit-26.0-user-navigates-to-https-portal.primofabric.-b2520c043f.png",
+                  "timeStamp": 1778392733854
+                }
+              ],
+              "duration": 3410,
+              "result": "SUCCESS"
+            }
+          ],
+          "reportData": [],
+          "screenshots": [],
+          "duration": 4006,
+          "result": "SUCCESS"
+        }
+      ],
+      "reportData": [],
+      "screenshots": [],
+      "duration": 4214,
+      "result": "SUCCESS"
+    },
+    {
+      "number": 5,
+      "description": "When the user logs in with credentials",
+      "startTime": "2026-05-10T05:58:53.923Z",
+      "children": [
+        {
+          "number": 6,
+          "description": "User logs in as &quot;primo-it@heyprimo.com&quot;",
+          "startTime": "2026-05-10T05:58:53.935Z",
+          "children": [
+            {
+              "number": 7,
+              "description": "User enters &quot;primo-it@heyprimo.com&quot; into Email Field",
+              "startTime": "2026-05-10T05:58:54.135Z",
+              "children": [],
+              "reportData": [],
+              "screenshots": [
+                {
+                  "screenshot": "photo-win32-webkit-26.0-user-enters-primo-it-heyprimo.com-into-email-557a181626.png",
+                  "screenshotName": "photo-win32-webkit-26.0-user-enters-primo-it-heyprimo.com-into-email-557a181626.png",
+                  "timeStamp": 1778392737343
+                }
+              ],
+              "duration": 2435,
+              "result": "SUCCESS"
+            },
+            {
+              "number": 8,
+              "description": "User clicks on Login Button",
+              "startTime": "2026-05-10T05:58:57.381Z",
+              "children": [],
+              "reportData": [],
+              "screenshots": [
+                {
+                  "screenshot": "photo-win32-webkit-26.0-user-clicks-on-login-button-2e1090168b.png",
+                  "screenshotName": "photo-win32-webkit-26.0-user-clicks-on-login-button-2e1090168b.png",
+                  "timeStamp": 1778392738710
+                }
+              ],
+              "duration": 1124,
+              "result": "SUCCESS"
+            },
+            {
+              "number": 9,
+              "description": "User enters &quot;Test1234#&quot; into Password Field",
+              "startTime": "2026-05-10T05:58:58.721Z",
+              "children": [],
+              "reportData": [],
+              "screenshots": [
+                {
+                  "screenshot": "photo-win32-webkit-26.0-user-enters-test1234-into-password-field-04b46c0d1a.png",
+                  "screenshotName": "photo-win32-webkit-26.0-user-enters-test1234-into-password-field-04b46c0d1a.png",
+                  "timeStamp": 1778392738972
+                }
+              ],
+              "duration": 84,
+              "result": "SUCCESS"
+            },
+            {
+              "number": 10,
+              "description": "User clicks on Login Button",
+              "startTime": "2026-05-10T05:58:58.988Z",
+              "children": [],
+              "reportData": [],
+              "screenshots": [
+                {
+                  "screenshot": "photo-win32-webkit-26.0-user-clicks-on-login-button-20a8027acb.png",
+                  "screenshotName": "photo-win32-webkit-26.0-user-clicks-on-login-button-20a8027acb.png",
+                  "timeStamp": 1778392741195
+                }
+              ],
+              "duration": 2017,
+              "result": "SUCCESS"
+            }
+          ],
+          "reportData": [],
+          "screenshots": [],
+          "duration": 7286,
+          "result": "SUCCESS"
+        }
+      ],
+      "reportData": [],
+      "screenshots": [],
+      "duration": 7315,
+      "result": "SUCCESS"
+    },
+    {
+      "number": 11,
+      "description": "Then I should see the tittle &quot;PRIMO&quot;",
+      "startTime": "2026-05-10T05:59:01.240Z",
+      "children": [
+        {
+          "number": 12,
+          "description": "User ensures that User gets the page title does include &quot;PRIMO&quot;",
+          "startTime": "2026-05-10T05:59:01.308Z",
+          "children": [],
+          "reportData": [],
+          "screenshots": [
+            {
+              "screenshot": "photo-win32-webkit-26.0-user-ensures-that-user-gets-the-page-title-doe-c917325bac.png",
+              "screenshotName": "photo-win32-webkit-26.0-user-ensures-that-user-gets-the-page-title-doe-c917325bac.png",
+              "timeStamp": 1778392742637
+            }
+          ],
+          "duration": 92,
+          "result": "SUCCESS"
+        }
+      ],
+      "reportData": [],
+      "screenshots": [],
+      "duration": 1411,
+      "result": "SUCCESS"
+    }
+  ],
+  "userStory": {
+    "id": "login-to-the-portal-and-see-terms",
+    "storyName": "Login to the Portal and see terms",
+    "displayName": "Login to the Portal and see terms",
+    "path": "ui/login/login",
+    "type": "feature",
+    "narrative": "",
+    "pathElements": [
+      {
+        "name": "ui",
+        "description": "Ui"
+      },
+      {
+        "name": "login",
+        "description": "Login"
+      },
+      {
+        "name": "login",
+        "description": "Login"
+      }
+    ]
+  },
+  "startTime": "2026-05-10T05:58:49.664Z",
+  "testSource": "JS",
+  "tags": [
+    {
+      "name": "Ui",
+      "type": "theme",
+      "displayName": "Ui"
+    },
+    {
+      "name": "Ui/Login",
+      "type": "capability",
+      "displayName": "Login"
+    },
+    {
+      "name": "Ui/Login/Login to the Portal and see terms",
+      "type": "feature",
+      "displayName": "Login to the Portal and see terms"
+    },
+    {
+      "name": "login",
+      "type": "tag",
+      "displayName": "login"
+    },
+    {
+      "name": "browser:webkit",
+      "type": "tag"
+    }
+  ],
+  "featureTag": {
+    "name": "Ui/Login/Login to the Portal and see terms",
+    "type": "feature",
+    "displayName": "Login to the Portal and see terms"
+  },
+  "actors": [
+    {
+      "name": "User",
+      "can": [
+        "PerformActivities",
+        "AnswerQuestions",
+        "RaiseErrors",
+        "ScheduleWork { scheduler: { clock: { timeAdjustment: { milliseconds: 0 } }, interactionTimeout: { milliseconds: 5000 } } }",
+        "BrowseTheWeb (BrowseTheWebWithPlaywright)",
+        "CallAnApi { baseURL: \"https://api.primofabric.com\", headers: { common: { Accept: \"application/json, text/plain, */*\" } }, timeout: 10000 }",
+        "TakeNotes { notepad: {} }"
+      ]
+    }
+  ],
+  "result": "SUCCESS",
+  "duration": 13165,
+  "context": "WEBKIT"
+}
