@@ -63,5 +63,5 @@ stages:
             displayName: 'Publish Serenity report'
             condition: always()
             inputs:
-              reportDir: '$(System.DefaultWorkingDirectory)/target/site/serenity/report/index.html'
+              reportDir: '$(System.DefaultWorkingDirectory)/target/site/serenity/report'
               tabName: 'Serenity Report'
