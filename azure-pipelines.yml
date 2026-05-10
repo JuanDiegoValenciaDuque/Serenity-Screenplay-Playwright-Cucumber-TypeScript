@@ -59,19 +59,9 @@ stages:
               CLIENTE_SECRET: $(CLIENTE_SECRET)
               BEARER_TOKEN: $(BEARER_TOKEN)
 
-          - powershell: |
-              if (Test-Path "target/site/serenity/report/index.html") {
-                Write-Host "##[section]Report found at target/site/serenity/report/index.html"
-              } else {
-                Write-Host "##[warning]Report NOT found. Listing target directory:"
-                Get-ChildItem -Recurse target/ -ErrorAction SilentlyContinue | Select-Object FullName
-              }
-            displayName: 'Check report exists'
-            condition: always()
-
           - task: PublishHtmlReport@1
             displayName: 'Publish Serenity report'
             condition: always()
             inputs:
-              reportDir: 'target/site/serenity/report'
+              reportDir: '$(System.DefaultWorkingDirectory)/target/site/serenity/report'
               tabName: 'Serenity Report'
