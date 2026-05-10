@@ -31,11 +31,14 @@ const browsers = getBrowsersFromArgs();
 console.log('Cleaning previous results...');
 clean();
 
+let hasFailures = false;
+
 console.log('Running API tests (once, no browser)...');
 try {
   runApiTests(tag);
 } catch (error) {
   console.error('API tests failed', error);
+  hasFailures = true;
 }
 
 for (const browser of browsers) {
@@ -44,10 +47,16 @@ for (const browser of browsers) {
     runTestsByTag(tag, browser);
   } catch (error) {
     console.error(`${browser} failed`, error);
+    hasFailures = true;
   }
 }
 
 console.log('Generating Serenity consolidated report...');
 generateConsolidatedReport(['api', ...browsers]);
 
-console.log('All browsers executed successfully.');
+if (hasFailures) {
+  console.error('One or more test suites failed.');
+  process.exit(1);
+}
+
+console.log('All test suites passed.');

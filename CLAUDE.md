@@ -630,6 +630,60 @@ npm start
 
 ---
 
+## CI/CD — Azure DevOps Pipeline
+
+### Overview
+
+Pipeline file: `azure-pipelines.yml` (repo root). Triggers on push/PR to `main` and `develop`.
+
+**Agent:** Self-hosted (`Default` pool, agent `LVALENCIA` — Windows 11). No hosted parallelism required.
+
+**Pre-requisites on the agent machine:**
+- Java 17+ (OpenJDK 17.0.19) — used by `serenity-bdd run` for report generation
+- Node.js 22+
+- Playwright browser binaries: `npx playwright install --with-deps`
+
+### Pipeline Steps
+
+1. **Set up Node.js 22** — `NodeTool@0`
+2. **Install dependencies** — `npm ci`
+3. **Install Playwright browsers** — `npx playwright install --with-deps`
+4. **Run tests** — `npm test` with optional `TAG_FILTER` and `BROWSER_FILTER` variables
+5. **Zip report** — compresses `target/site/serenity/report/` into `serenity-report.zip`
+6. **Upload artifact** — publishes `serenity-report.zip` as a pipeline artifact (download and open `index.html` locally)
+
+### Secret Variables (Azure DevOps → Pipelines → Edit → Variables)
+
+| Variable | Description |
+|----------|-------------|
+| `USER_EMAIL` | Portal login email |
+| `USER_PASSWORD` | Portal login password |
+| `BASE_URL` | UI base URL |
+| `API_BASE_URL` | API base URL |
+| `CLIENTE_ID` | OAuth client ID |
+| `CLIENTE_SECRET` | OAuth client secret |
+| `BEARER_TOKEN` | User-level JWT for zip/density/booking endpoints |
+| `GITHUB_PAT` | GitHub Personal Access Token with `repo` scope (for GitHub Pages deployment) |
+
+### Optional Runtime Variables
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `TAG_FILTER` | `@smoke` or `@api,@login` | Cucumber tag filter |
+| `BROWSER_FILTER` | `chromium` or `webkit` | Browser(s) for UI tests |
+
+### Serenity Report — Pipeline Artifact
+
+The consolidated HTML report is zipped and published as a pipeline artifact after every run.
+
+- **Artifact name:** `serenity-report`
+- **Location:** Pipeline run → **Artifacts** section → download `serenity-report.zip`
+- **View report:** unzip and open `index.html` locally
+
+> **Note:** `npm run test:report` is NOT called separately in the pipeline — `npm test` already calls `generateConsolidatedReport()` internally at the end of the runner.
+
+---
+
 ## Pending Coverage
 
 - Drayage and FTL quoting flows

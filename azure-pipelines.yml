@@ -59,41 +59,20 @@ stages:
               CLIENTE_SECRET: $(CLIENTE_SECRET)
               BEARER_TOKEN: $(BEARER_TOKEN)
 
-          - powershell: |
-              $ErrorActionPreference = 'Continue'
-              git config --global user.email "ci@pipeline.com"
-              git config --global user.name "Azure Pipeline"
-
-              $repoUrl = "https://$(GITHUB_PAT)@github.com/JuanDiegoValenciaDuque/Serenity-Screenplay-Playwright-Cucumber-TypeScript.git"
-              $ghPagesDir = "$(Agent.TempDirectory)/gh-pages"
-
-              git clone --branch gh-pages $repoUrl $ghPagesDir
-              $cloneSuccess = $LASTEXITCODE -eq 0
-
-              if (-not $cloneSuccess) {
-                Write-Host "gh-pages branch not found, creating orphan branch..."
-                git clone $repoUrl $ghPagesDir
-                Set-Location $ghPagesDir
-                git checkout --orphan gh-pages
-                git rm -rf .
-              } else {
-                Set-Location $ghPagesDir
-                Get-ChildItem -Exclude ".git" | Remove-Item -Recurse -Force
-              }
-
-              Copy-Item -Path "$(System.DefaultWorkingDirectory)/target/site/serenity/report/*" -Destination $ghPagesDir -Recurse -Force
-
-              git add .
-              git commit -m "Update Serenity report - Build $(Build.BuildNumber) [skip ci]"
-              git push origin gh-pages
-            displayName: 'Deploy report to GitHub Pages'
+          - task: ArchiveFiles@2
+            displayName: 'Zip Serenity report'
             condition: always()
+            inputs:
+              rootFolderOrFile: 'target/site/serenity/report'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/serenity-report.zip'
+              replaceExistingArchive: true
 
-          - powershell: |
-              $url = "https://juandiegovalenciaduque.github.io/Serenity-Screenplay-Playwright-Cucumber-TypeScript/"
-              $content = "## Serenity Test Report`n`n[Ver reporte completo]($url)"
-              $summaryFile = "$(Build.ArtifactStagingDirectory)/summary.md"
-              $content | Out-File -FilePath $summaryFile -Encoding utf8
-              Write-Host "##vso[task.uploadsummary]$summaryFile"
-            displayName: 'Add report link to pipeline summary'
+          - task: PublishPipelineArtifact@1
+            displayName: 'Upload report artifact'
             condition: always()
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/serenity-report.zip'
+              artifact: 'serenity-report'
+              publishLocation: 'pipeline'
