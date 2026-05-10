@@ -59,9 +59,20 @@ stages:
               CLIENTE_SECRET: $(CLIENTE_SECRET)
               BEARER_TOKEN: $(BEARER_TOKEN)
 
-          - task: PublishHtmlReport@1
-            displayName: 'Publish Serenity report'
+          - task: ArchiveFiles@2
+            displayName: 'Zip Serenity report'
             condition: always()
             inputs:
-              reportDir: '$(System.DefaultWorkingDirectory)/target/site/serenity/report'
-              tabName: 'Serenity Report'
+              rootFolderOrFile: 'target/site/serenity/report'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/serenity-report.zip'
+              replaceExistingArchive: true
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Upload report artifact'
+            condition: always()
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/serenity-report.zip'
+              artifact: 'serenity-report'
+              publishLocation: 'pipeline'
