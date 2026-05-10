@@ -59,10 +59,6 @@ stages:
               CLIENTE_SECRET: $(CLIENTE_SECRET)
               BEARER_TOKEN: $(BEARER_TOKEN)
 
-          - script: npm run test:report
-            displayName: 'Generate Serenity HTML report'
-            condition: always()
-
           - task: PublishHtmlReport@1
             displayName: 'Publish Serenity report'
             condition: always()
