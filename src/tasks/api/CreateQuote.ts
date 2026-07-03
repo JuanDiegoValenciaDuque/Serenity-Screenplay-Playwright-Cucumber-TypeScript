@@ -13,31 +13,23 @@ export class CreateQuote {
     return Task.where(
       '#actor creates an LTL quote',
       Send.a(
-        PostRequest.to('https://api.primofabric.com/portal/v2/quote')
+        PostRequest.to('/portal/v2/quote')
           .with(
             Question.about('quote request body', async actor => {
               const testData = await actor.answer(notes<PrimoNotes>().get('testData'));
               const enrichedData = await actor.answer(notes<PrimoNotes>().get('enrichedData'));
-              const body = QuoteRequestBuilder.from(testData, enrichedData);
-              console.log('[CreateQuote] Body:', JSON.stringify(body, null, 2));
-              return body;
+              return QuoteRequestBuilder.from(testData, enrichedData);
             }),
           )
-          .using(
-            Question.about('quote request auth header', actor =>
-              actor.answer(notes<PrimoNotes>().get('bearerToken')).then(token => ({
-                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-                timeout: 60_000,
-                validateStatus: () => true,
-              })),
-            ),
-          ),
+          .using({
+            headers: { Authorization: `Bearer ${process.env.BEARER_TOKEN}`, 'Content-Type': 'application/json' },
+            timeout: 60_000,
+            validateStatus: () => true,
+          }),
       ),
-      Interaction.where('#actor logs the quote response', async actor => {
+      Interaction.where('#actor validates the quote response', async actor => {
         const status = await actor.answer(LastResponse.status());
         const body = await actor.answer(LastResponse.body<QuoteBody>());
-        console.log(`[CreateQuote] Status: ${status}`);
-        console.log(`[CreateQuote] Body: ${JSON.stringify(body, null, 2)}`);
         if (!body.data) {
           throw new Error(`[CreateQuote] Quote failed (${status}): ${JSON.stringify(body.errors)}`);
         }

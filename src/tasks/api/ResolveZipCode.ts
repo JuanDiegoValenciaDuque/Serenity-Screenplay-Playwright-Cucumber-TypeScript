@@ -2,7 +2,7 @@ import { Interaction, notes, Task } from '@serenity-js/core';
 import { PostRequest, Send, LastResponse } from '@serenity-js/rest';
 import { PrimoNotes } from '../../models/PrimoNotes';
 
-const ADDRESS_SEARCH_URL = 'https://api.primofabric.com/portal/v1/address-search';
+const ADDRESS_SEARCH_URL = '/portal/v1/address-search';
 
 interface AddressSearchResponse {
   data: Array<{ city: string; state: string }> | null;
@@ -23,9 +23,6 @@ async function lookupZip(zip: string, actor: any): Promise<{ city: string; state
   ).performAs(actor);
 
   const body = await actor.answer(LastResponse.body<AddressSearchResponse>());
-  const status = await actor.answer(LastResponse.status());
-
-  console.log(`[ResolveZipCode] ZIP ${zip} → status: ${status} | data: ${JSON.stringify(body)}`);
 
   if (!body.data || body.data.length === 0) {
     throw new Error(`[ResolveZipCode] No address found for zip "${zip}". Response: ${JSON.stringify(body)}`);
@@ -44,13 +41,10 @@ export class ResolveZipCode {
         const origin = await lookupZip(String(testData.OriginZip), actor);
         const destination = await lookupZip(String(testData.DestinationZip), actor);
 
-        console.log(`[ResolveZipCode] Origin: ${origin.city}, ${origin.state}`);
-        console.log(`[ResolveZipCode] Destination: ${destination.city}, ${destination.state}`);
-
         const existing = await actor.answer(notes<PrimoNotes>().get('enrichedData')).catch(() => null);
 
         await notes<PrimoNotes>().set('enrichedData', {
-          ...(existing ?? { commodityDetails: [] }),
+          ...(existing ?? { commodityDetails: [], selectedAccessorials: [] }),
           originCity: origin.city,
           originState: origin.state,
           destinationCity: destination.city,

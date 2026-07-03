@@ -9,7 +9,7 @@ Feature: LTL quote created in Portal is successfully registered in Shipwell
     When the user logs in with credentials
 
   Scenario Outline: LTL quote is created in Shipwell
-    Given I load the Excel file from "src/models/Shipwell_TestCases_filtered.xlsx"
+    Given I load the Excel file from "src/models/TestCasesAPI.xlsx"
     And I get test data for "<CaseID>"
     When the user wants to create a new LTL quote
     And the user fills booking a new LTL quote using Excel data
@@ -17,4 +17,16 @@ Feature: LTL quote created in Portal is successfully registered in Shipwell
 
     Examples:
       | CaseID |
-      | TC-103 |
+      | TC-001 |
+      | TC-002 |
+      | TC-003 |
+      | TC-004 |
+      | TC-005 |
+      | TC-006 |
+      | TC-007 |
+      | TC-008 |
+      | TC-009 |
+      | TC-010 |
+      | TC-011 |
+      | TC-012 |
+      | TC-013 |

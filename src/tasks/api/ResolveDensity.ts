@@ -4,7 +4,7 @@ import { PrimoNotes } from '../../models/PrimoNotes';
 import { CommodityEnrichment } from '../../models/EnrichedData';
 import { TestData } from '../../models/TestData';
 
-const DENSITY_URL = 'https://api.primofabric.com/rating/v1/density';
+const DENSITY_URL = '/rating/v1/density';
 
 interface DensityResponse {
   data: { totalCube: number; totalDensity: number; freightClass: string };
@@ -46,15 +46,13 @@ export class ResolveDensity {
           const response = await actor.answer(LastResponse.body<DensityResponse>());
           const { totalCube, totalDensity, freightClass } = response.data;
 
-          console.log(`[ResolveDensity] C${n} — volume: ${totalCube} | density: ${totalDensity} | class: ${freightClass}`);
-
-          commodityDetails.push({ volume: totalCube, density: totalDensity, freightClass });
+          commodityDetails.push({ volume: totalCube, density: totalDensity, freightClass, hazmatInfo: null, nmfc: null });
         }
 
         const existing = await actor.answer(notes<PrimoNotes>().get('enrichedData')).catch(() => null);
 
         await notes<PrimoNotes>().set('enrichedData', {
-          ...(existing ?? { originCity: '', originState: '', destinationCity: '', destinationState: '' }),
+          ...(existing ?? { originCity: '', originState: '', destinationCity: '', destinationState: '', selectedAccessorials: [] }),
           commodityDetails,
         }).performAs(actor);
       }),

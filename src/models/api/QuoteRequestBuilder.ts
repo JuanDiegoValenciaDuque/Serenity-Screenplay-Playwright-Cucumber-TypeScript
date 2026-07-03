@@ -26,12 +26,13 @@ function buildItems(data: TestData, enriched: EnrichedData) {
       height: data[`C${n}_Height` as keyof TestData] as number,
       weight: data[`C${n}_Weight` as keyof TestData] as number,
       volume: enriched.commodityDetails[index]?.volume ?? null,
+      NMFC: enriched.commodityDetails[index]?.nmfc ?? null,
       commodityClass: enriched.commodityDetails[index]?.freightClass ?? null,
       numberOfPieces: null,
       pieceType: null,
       levels: (data[`C${n}_Levels` as keyof TestData] as number) ?? 1,
-      isHazardous: !!data[`C${n}_Hazmat` as keyof TestData],
-      UNOrTechnicalName: '',
+      isHazardous: !!(data[`C${n}_Hazmat` as keyof TestData] as string),
+      UNOrTechnicalName: (data[`C${n}_Hazmat` as keyof TestData] as string) ?? '',
       isStackable: (data[`C${n}_Stackable` as keyof TestData] as string) === 'Yes',
     }));
 }
@@ -39,8 +40,8 @@ function buildItems(data: TestData, enriched: EnrichedData) {
 export class QuoteRequestBuilder {
   static from(data: TestData, enriched: EnrichedData) {
     return {
-      customerReference: 1237100099,
-      customerNumber: 1235100202,
+      customerReference: Number(process.env.CUSTOMER_BSN),
+      customerNumber: Number(process.env.CUSTOMER_NUMBER),
       customerName: 'Primo TEST',
       requestingUser: process.env.USER_EMAIL ?? '',
       modes: [data.Mode],
@@ -74,7 +75,7 @@ export class QuoteRequestBuilder {
         country: 'US',
       },
       items: buildItems(data, enriched),
-      selectedAccessorials: [],
+      selectedAccessorials: enriched.selectedAccessorials ?? [],
       service: null,
       equipment: null,
       equipmentLength: null,

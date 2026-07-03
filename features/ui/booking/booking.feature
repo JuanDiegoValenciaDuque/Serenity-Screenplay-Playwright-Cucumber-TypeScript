@@ -9,7 +9,7 @@ Feature: LTL quote created in Portal is successfully registered in PRIMUS
     When the user logs in with credentials
 
   Scenario Outline: LTL quote is created in PORTAL
-    Given I load the Excel file from "src/models/Shipwell_TestCases_filtered.xlsx"
+    Given I load the Excel file from "src/models/TestCasesAPI.xlsx"
     And I get test data for "<CaseID>"
     When the user wants to create a new LTL quote
     And the user fills booking a new LTL quote using Excel data
@@ -20,4 +20,4 @@ Feature: LTL quote created in Portal is successfully registered in PRIMUS
 
      Examples:
       | CaseID |
-      | TC-103 |
+      | TC-001 |

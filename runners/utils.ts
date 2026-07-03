@@ -147,10 +147,7 @@ export function generateConsolidatedReport(browsers: string[]) {
   }
 
   execSync(
-    `npx serenity-bdd run \
-      --source ${mergedDir} \
-      --destination target/site/serenity/report \
-      --features ./features`,
+    `npx serenity-bdd run --source ${mergedDir} --destination target/site/serenity/report`,
     { stdio: 'inherit' },
   );
 }

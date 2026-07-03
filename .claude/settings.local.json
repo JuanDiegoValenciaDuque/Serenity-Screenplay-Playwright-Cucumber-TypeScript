@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm \"c:/Users/juan.valencia/Automation/Serenity-Screenplay-Playwright-Cucumber-TypeScript/scripts/generatePdfReport.ts\")",
+      "Bash(rm \"c:/Users/juan.valencia/Automation/Serenity-Screenplay-Playwright-Cucumber-TypeScript/scripts/generateSingleReport.ts\")"
+    ]
+  }
+}

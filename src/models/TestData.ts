@@ -29,8 +29,8 @@ export interface TestData {
   C1_Width: number;
   C1_Height: number;
   C1_Weight: number;
-//  C1_Hazmat: string;
-//  C1_NMFC: string;
+  C1_Hazmat: string;
+  C1_NMFC: string;
   C1_Stackable: string;
   C1_Levels: number;
 
@@ -41,8 +41,8 @@ export interface TestData {
   C2_Width: number;
   C2_Height: number;
   C2_Weight: number;
-//  C2_Hazmat: string;
-//  C2_NMFC: string;
+  C2_Hazmat: string;
+  C2_NMFC: string;
   C2_Stackable: string;
   C2_Levels: number;
 
@@ -53,8 +53,8 @@ export interface TestData {
   C3_Width: number;
   C3_Height: number;
   C3_Weight: number;
-//  C3_Hazmat: string;
-//  C3_NMFC: string;
+  C3_Hazmat: string;
+  C3_NMFC: string;
   C3_Stackable: string;
   C3_Levels: number;
 
@@ -65,8 +65,8 @@ export interface TestData {
   C4_Width: number;
   C4_Height: number;
   C4_Weight: number;
-//  C4_Hazmat: string;
-//  C4_NMFC: string;
+  C4_Hazmat: string;
+  C4_NMFC: string;
   C4_Stackable: string;
   C4_Levels: number;
 
@@ -77,10 +77,14 @@ export interface TestData {
   C5_Width: number;
   C5_Height: number;
   C5_Weight: number;
-//  C5_Hazmat: string;
-//  C5_NMFC: string;
+  C5_Hazmat: string;
+  C5_NMFC: string;
   C5_Stackable: string;
   C5_Levels: number;
+
+  HazmatContactName?: string;
+  HazmatContactPhone?: string;
+  HazmatContractNumber?: string;
 
   PickupWindowFrom: string;
   PickupWindowTo: string;
